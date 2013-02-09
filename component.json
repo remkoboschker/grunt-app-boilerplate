@@ -1,0 +1,11 @@
+{
+  "name": "grunt-app-boilerplate",
+  "version": "0.0.1",
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "backbone": "~0.9.10",
+    "underscore": "~1.4.4",
+    "require": "~2.1.4",
+    "modernizr": "~2.6.2"
+  }
+}
