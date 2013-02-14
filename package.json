@@ -2,7 +2,7 @@
   "name": "grunt-app-boilerplate",
   "version": "0.0.1",
   "devDependencies": {
-    "grunt": "0.4.0rc7",
+    "grunt": "0.4.0rc8",
     
     "grunt-contrib-coffee": "0.4.0rc7",
     "grunt-contrib-clean": "0.4.0rc6",

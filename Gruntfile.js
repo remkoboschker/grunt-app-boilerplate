@@ -12,16 +12,17 @@ module.exports = function(grunt) {
       ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
 
     // Task configuration.
-    /*concat: {
+    concat: {
       options: {
-        banner: '<%= banner %>',
+        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
+                '<%= grunt.template.today("yyyy-mm-dd") %> */',
         stripBanners: true
       },
       dist: {
-        src: ['lib/<%= pkg.name %>.js'],
-        dest: 'dist/<%= pkg.name %>.js'
+        src: ['vendor/**/*.js', 'app/{scripts,modules}/**/*.js', 'dist/tmp/templates.js'],
+        dest: "dist/debug/<%= pkg.name %>.js"
       }
-    },*/
+    },
 
     /*uglify: {
       options: {
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       app: {
-        src: ['app/scripts/**/*.js']
+        src: ['app/{scripts,modules}/**/*.js']
       }
     },
 
@@ -115,7 +116,7 @@ module.exports = function(grunt) {
           namespace: "JST"
         },
         files: {
-          "dist/debug/templates.js": ["app/templates/**/*.hbs", "app/modules/**/*.hbs"]
+          "dist/tmp/templates.js": ["app/{templates,modules}/**/*.hbs"]
         }
       }
     }
@@ -138,7 +139,11 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bower');
 
-  // Default task.
-  grunt.registerTask('default', ['coffee', 'jshint', 'sass']);
+
+  grunt.registerTask('scripts', ['coffee', 'jshint']);
+  grunt.registerTask('styles', ['sass']);
+  
+  grunt.registerTask('default', ['scripts', 'styles']);
+  grunt.registerTask('dist', ['default', 'handlebars', 'concat']);
 
 };
