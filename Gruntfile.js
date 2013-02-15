@@ -5,23 +5,30 @@ module.exports = function(grunt) {
   grunt.initConfig({
     // Metadata.
     pkg: grunt.file.readJSON('package.json'),
-    banner: '/*! <%= pkg.title || pkg.name %> - v<%= pkg.version %> - ' +
+    banner: '/**\n * <%= pkg.name %> - v<%= pkg.version %> - ' +
       '<%= grunt.template.today("yyyy-mm-dd") %>\n' +
-      '<%= pkg.homepage ? "* " + pkg.homepage + "\\n" : "" %>' +
-      '* Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author.name %>;' +
-      ' Licensed <%= _.pluck(pkg.licenses, "type").join(", ") %> */\n',
+      '<%= pkg.homepage ? " * " + pkg.homepage + "\\n" : "" %>' +
+      ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
+      '<%= pkg.license ? " * Licensed: " + pkg.license + "\\n" : "" %> */\n\n',
 
     // Task configuration.
     concat: {
       options: {
-        banner: '/*! <%= pkg.name %> - v<%= pkg.version %> - ' +
-                '<%= grunt.template.today("yyyy-mm-dd") %> */',
+        banner: '<%= banner %>',
         stripBanners: true
       },
-      dist: {
-        src: ['vendor/**/*.js', 'app/{scripts,modules}/**/*.js', 'dist/tmp/templates.js'],
-        dest: "dist/debug/<%= pkg.name %>.js"
-      }
+      scripts: {
+        files: {
+          'dist/debug/scripts/vendors.js': ['vendor/{jquery,underscore}/*.js', 'vendor/**/*.js'],
+          'dist/debug/scripts/main.js': ['dist/tmp/templates.js', 'app/{scripts,modules}/**/*.js']
+        }
+      },
+      styles: {
+        files: {
+          'dist/debug/styles/vendors.css': ['vendor/h5bp/normalize.css', 'vendor/**/*.css'],
+          'dist/debug/styles/main.css': ['app/{styles,modules}/**/*.css']
+        }
+      }      
     },
 
     /*uglify: {
@@ -119,6 +126,19 @@ module.exports = function(grunt) {
           "dist/tmp/templates.js": ["app/{templates,modules}/**/*.hbs"]
         }
       }
+    },
+
+    targethtml: {
+      debug: {
+        files: {
+          "dist/debug/index.html": "app/index.html"
+        }
+      }    
+    },
+
+    clean: {
+      debug: ["dist/debug"],
+      tmp: ["dist/tmp"]
     }
 
   });
@@ -130,20 +150,20 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks('grunt-contrib-copy');
+  //grunt.loadNpmTasks('grunt-contrib-uglify');
+  //grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-jst');
-  grunt.loadNpmTasks('grunt-contrib-mincss');
-  grunt.loadNpmTasks('grunt-contrib-requirejs');
+  //grunt.loadNpmTasks('grunt-contrib-mincss');
+  //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   grunt.loadNpmTasks('grunt-bower');
-
+  grunt.loadNpmTasks('grunt-targethtml');
 
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
   
   grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('dist', ['default', 'handlebars', 'concat']);
+  grunt.registerTask('debug', ['default', 'clean:debug', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'clean:tmp']);
 
 };

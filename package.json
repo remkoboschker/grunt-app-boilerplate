@@ -1,9 +1,11 @@
 {
   "name": "grunt-app-boilerplate",
   "version": "0.0.1",
+  "author": "Andrei Bahdanovich <bahdanovich@gmail.com>",
+  "homepage": "http://grunt-bp.dev/",
+  "license": "MIT",
   "devDependencies": {
     "grunt": "0.4.0rc8",
-    
     "grunt-contrib-coffee": "0.4.0rc7",
     "grunt-contrib-clean": "0.4.0rc6",
     "grunt-contrib-sass": "0.2.2rc7",
@@ -16,7 +18,7 @@
     "grunt-contrib-jst": "0.4.0rc7",
     "grunt-contrib-mincss": "0.4.0rc7",
     "grunt-contrib-requirejs": "0.4.0rc7",
-
-    "grunt-bower": "~0.5.0"
+    "grunt-bower": "~0.5.0",
+    "grunt-targethtml": "https://github.com/STRML/grunt-targethtml/tarball/master"
   }
 }
