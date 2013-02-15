@@ -139,7 +139,15 @@ module.exports = function(grunt) {
     clean: {
       debug: ["dist/debug"],
       tmp: ["dist/tmp"]
-    }
+    },
+
+    copy: {
+     debug: {
+        files: [
+          { expand: true, cwd: 'app/', src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], dest: "dist/debug/" }
+        ]
+      }
+    }    
 
   });
 
@@ -151,7 +159,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   //grunt.loadNpmTasks('grunt-contrib-uglify');
-  //grunt.loadNpmTasks('grunt-contrib-copy');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-jst');
   //grunt.loadNpmTasks('grunt-contrib-mincss');
@@ -164,6 +172,6 @@ module.exports = function(grunt) {
   grunt.registerTask('styles', ['sass']);
   
   grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('debug', ['default', 'clean:debug', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'clean:tmp']);
+  grunt.registerTask('debug', ['default', 'clean:debug', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug', 'clean:tmp']);
 
 };
