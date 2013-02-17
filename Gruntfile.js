@@ -20,13 +20,13 @@ module.exports = function(grunt) {
       scripts: {
         files: {
           'dist/debug/scripts/vendors.js': ['vendor/{jquery,underscore}/*.js', 'vendor/**/*.js'],
-          'dist/debug/scripts/main.js': ['dist/tmp/templates/*.js', 'app/{scripts,modules}/**/*.js']
+          'dist/debug/scripts/main.js': ['www_root/{templates,scripts,modules}/**/*.js']
         }
       },
       styles: {
         files: {
           'dist/debug/styles/vendors.css': ['vendor/h5bp/normalize.css', 'vendor/**/*.css'],
-          'dist/debug/styles/main.css': ['app/{styles,modules}/**/*.css']
+          'dist/debug/styles/main.css': ['www_root/{styles,modules}/**/*.css']
         }
       }      
     },
@@ -61,7 +61,7 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },
       app: {
-        src: ['app/{scripts,modules}/**/*.js']
+        src: ['www_root/{scripts,modules}/**/*.js']
       }
     },
 
@@ -75,13 +75,17 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },
       app_scripts: {
-        files: '<%= coffee.dev.src %>',
+        files: 'app/<%= coffee.dev.src %>',
         tasks: ['scripts']
       },
       app_styles: {
-        files: '<%= sass.dev.files[0].src %>',
+        files: 'app/<%= sass.dev.files[0].src %>',
         tasks: ['styles']
-      }      
+      },
+      app_templates: {
+        files: 'app/<%= handlebars.dev.files[0].src %>',
+        tasks: ['templates']
+      }            
     },
 
     bower: {
@@ -97,7 +101,9 @@ module.exports = function(grunt) {
     coffee: {
       dev: {
         expand: true,
-        src: ['app/{scripts,modules}/**/*.coffee'],
+        cwd: 'app/',
+        src: ['{scripts,modules}/**/*.coffee'],
+        dest: "www_root/",
         ext: '.js'
       }
     },
@@ -111,14 +117,16 @@ module.exports = function(grunt) {
         },
         files: [{
           expand: true,
-          src: ['app/{styles,modules}/**/*.scss'],
+          cwd: 'app/',
+          src: ['{styles,modules}/**/*.scss'],
+          dest: "www_root/",
           ext: '.css'
         }]
       }
     },
 
     handlebars: {
-      compile: {
+      dev: {
         options: {
           namespace: "app.templates",
           processName: function(filename) {
@@ -134,7 +142,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'app/',
           src: ["{templates,modules}/**/*.hbs"],
-          dest: "dist/tmp/",
+          dest: "www_root/",
           ext: '.js'
         }]
       }
@@ -143,21 +151,21 @@ module.exports = function(grunt) {
     targethtml: {
       debug: {
         files: {
-          "dist/debug/index.html": "app/index.html"
+          "dist/debug/index.html": "www_root/index.html"
         }
       }    
     },
 
     clean: {
-      debug: ["dist/debug"],
-      tmp: ["dist/tmp"]
+      debug: ["dist/debug/"],
+      dev: ["www_root/{scripts,styles,templates}/"]
     },
 
     copy: {
      debug: {
         files: [{ 
           expand: true, 
-          cwd: 'app/', 
+          cwd: 'www_root/', 
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "dist/debug/" 
         }]
@@ -168,7 +176,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           port: 9001,
-          base: 'app'
+          base: 'www_root'
         }
       },
       debug: {
@@ -192,8 +200,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-connect');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  //grunt.loadNpmTasks('grunt-contrib-uglify');
   //grunt.loadNpmTasks('grunt-contrib-mincss');
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
@@ -202,9 +210,10 @@ module.exports = function(grunt) {
 
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
-  
-  grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('debug', ['default', 'clean:debug', 'clean:tmp', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug', 'clean:tmp']);
+  grunt.registerTask('templates', ['handlebars']);
+
+  grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
+  grunt.registerTask('dist:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
   
   grunt.registerTask('server', ['connect:dev:keepalive']);
   grunt.registerTask('server:debug', ['connect:debug:keepalive']);

@@ -1,6 +1,8 @@
-if (typeof this["app"] isnt "undefined") and (typeof this["app"]["templates"] isnt "undefined") and (typeof this["app"]["templates"]["index"] is "function")
-	$('#main').append this["app"]["templates"]["index"] {name: 'World'}
-else
-	$.when($.get("/templates/index.hbs"))
-		.then (tpl) -> 
-			$('#main').append Handlebars.compile(tpl) {name: 'World'}
+render = (template_name, data) ->
+    if (typeof window["app"] isnt "undefined") and (typeof window["app"]["templates"] isnt "undefined") and (typeof window["app"]["templates"][template_name] is "function")
+        $('#main').append window["app"]["templates"][template_name] data
+    else
+        throw new Error "Template not found: " + template_name
+
+$ ->
+	render 'index', {name: 'World'}
