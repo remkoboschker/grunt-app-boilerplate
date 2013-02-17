@@ -20,7 +20,7 @@ module.exports = function(grunt) {
       scripts: {
         files: {
           'dist/debug/scripts/vendors.js': ['vendor/{jquery,underscore}/*.js', 'vendor/**/*.js'],
-          'dist/debug/scripts/main.js': ['dist/tmp/templates.js', 'app/{scripts,modules}/**/*.js']
+          'dist/debug/scripts/main.js': ['dist/tmp/templates/*.js', 'app/{scripts,modules}/**/*.js']
         }
       },
       styles: {
@@ -76,11 +76,11 @@ module.exports = function(grunt) {
       },
       app_scripts: {
         files: '<%= coffee.dev.src %>',
-        tasks: ['coffee', 'jshint:app']
+        tasks: ['scripts']
       },
       app_styles: {
         files: '<%= sass.dev.files[0].src %>',
-        tasks: ['sass']
+        tasks: ['styles']
       }      
     },
 
@@ -120,11 +120,23 @@ module.exports = function(grunt) {
     handlebars: {
       compile: {
         options: {
-          namespace: "JST"
+          namespace: "app.templates",
+          processName: function(filename) {
+              // trim "app/tempaltes" from path
+              filename = filename.substring(filename.indexOf('/')+1);
+              filename = filename.substring(filename.indexOf('/')+1);
+
+              // trim extension
+              return filename.substring(0, filename.lastIndexOf('.'));
+          }          
         },
-        files: {
-          "dist/tmp/templates.js": ["app/{templates,modules}/**/*.hbs"]
-        }
+        files: [{
+          expand: true,
+          cwd: 'app/',
+          src: ["{templates,modules}/**/*.hbs"],
+          dest: "dist/tmp/",
+          ext: '.js'
+        }]
       }
     },
 
@@ -143,11 +155,29 @@ module.exports = function(grunt) {
 
     copy: {
      debug: {
-        files: [
-          { expand: true, cwd: 'app/', src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], dest: "dist/debug/" }
-        ]
+        files: [{ 
+          expand: true, 
+          cwd: 'app/', 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
+          dest: "dist/debug/" 
+        }]
       }
-    }    
+    },
+
+    connect: {
+      dev: {
+        options: {
+          port: 9001,
+          base: 'app'
+        }
+      },
+      debug: {
+        options: {
+          port: 9002,
+          base: 'dist/debug'
+        }
+      }      
+    }      
 
   });
 
@@ -158,10 +188,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
-  //grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
   grunt.loadNpmTasks('grunt-contrib-jst');
+  grunt.loadNpmTasks('grunt-contrib-connect');
+
+  //grunt.loadNpmTasks('grunt-contrib-uglify');
   //grunt.loadNpmTasks('grunt-contrib-mincss');
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
@@ -172,6 +204,8 @@ module.exports = function(grunt) {
   grunt.registerTask('styles', ['sass']);
   
   grunt.registerTask('default', ['scripts', 'styles']);
-  grunt.registerTask('debug', ['default', 'clean:debug', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug', 'clean:tmp']);
-
+  grunt.registerTask('debug', ['default', 'clean:debug', 'clean:tmp', 'handlebars', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug', 'clean:tmp']);
+  
+  grunt.registerTask('server', ['connect:dev:keepalive']);
+  grunt.registerTask('server:debug', ['connect:debug:keepalive']);
 };

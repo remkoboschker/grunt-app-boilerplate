@@ -1,7 +1,7 @@
 (function() {
 
-  if (typeof this["JST"]["app/templates/index.hbs"] === "function") {
-    $('#main').append(this["JST"]["app/templates/index.hbs"]({
+  if ((typeof this["app"] !== "undefined") && (typeof this["app"]["templates"] !== "undefined") && (typeof this["app"]["templates"]["index"] === "function")) {
+    $('#main').append(this["app"]["templates"]["index"]({
       name: 'World'
     }));
   } else {
