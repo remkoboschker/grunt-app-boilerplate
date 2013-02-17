@@ -1,7 +1,7 @@
 components/
 dist/
 node_modules/
-vendor/
+www_root/bower/
 www_root/scripts/
 www_root/styles/
 www_root/templates/

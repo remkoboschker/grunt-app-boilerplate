@@ -19,27 +19,37 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: {
-          'dist/debug/scripts/vendors.js': ['vendor/{jquery,underscore}/*.js', 'vendor/**/*.js'],
+          'dist/debug/scripts/vendors.js': ['www_root/bower/{jquery,underscore,handlebars}/*.js'],
           'dist/debug/scripts/main.js': ['www_root/{templates,scripts,modules}/**/*.js']
         }
       },
       styles: {
         files: {
-          'dist/debug/styles/vendors.css': ['vendor/h5bp/normalize.css', 'vendor/**/*.css'],
+          'dist/debug/styles/vendors.css': ['www_root/vendor/h5bp/css/normalize.css', 'www_root/vendor/h5bp/css/main.css'],
           'dist/debug/styles/main.css': ['www_root/{styles,modules}/**/*.css']
         }
       }      
     },
 
-    /*uglify: {
-      options: {
-        banner: '<%= banner %>'
-      },
-      dist: {
-        src: '<%= concat.dist.dest %>',
-        dest: 'dist/<%= pkg.name %>.min.js'
+    uglify: {
+      release: {
+        expand: true,
+        cwd: 'dist/debug/',
+        src: ['scripts/vendors.js', 'scripts/main.js'],
+        dest: 'dist/release/',
+        ext: '.min.js'
       }
-    },*/
+    },
+
+    mincss: {
+      release: {
+        expand: true,
+        cwd: 'dist/debug/',
+        src: ['styles/vendors.css', 'styles/main.css'],
+        dest: 'dist/release/',
+        ext: '.min.css'
+      }
+    },
 
     jshint: {
       options: {
@@ -90,7 +100,7 @@ module.exports = function(grunt) {
 
     bower: {
       dev: {
-        dest: 'vendor',
+        dest: 'www_root/bower/',
         options: {
           basePath: 'components',
           stripJsAffix: true
@@ -153,12 +163,18 @@ module.exports = function(grunt) {
         files: {
           "dist/debug/index.html": "www_root/index.html"
         }
-      }    
+      },
+      release: {
+        files: {
+          "dist/release/index.html": "www_root/index.html"
+        }
+      }          
     },
 
     clean: {
+      dev: ["www_root/{scripts,styles,templates}/"],
       debug: ["dist/debug/"],
-      dev: ["www_root/{scripts,styles,templates}/"]
+      release: ["dist/release/"]
     },
 
     copy: {
@@ -169,7 +185,15 @@ module.exports = function(grunt) {
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "dist/debug/" 
         }]
-      }
+      },
+     release: {
+        files: [{ 
+          expand: true, 
+          cwd: 'www_root/', 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
+          dest: "dist/release/" 
+        }]
+      }      
     },
 
     connect: {
@@ -184,7 +208,13 @@ module.exports = function(grunt) {
           port: 9002,
           base: 'dist/debug'
         }
-      }      
+      },
+      release: {
+        options: {
+          port: 9003,
+          base: 'dist/release'
+        }
+      }            
     }      
 
   });
@@ -201,8 +231,8 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-mincss');
 
-  //grunt.loadNpmTasks('grunt-contrib-mincss');
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   grunt.loadNpmTasks('grunt-bower');
@@ -214,7 +244,9 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
   grunt.registerTask('dist:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
+  grunt.registerTask('dist:release', ['clean:release', 'uglify', 'mincss', 'targethtml:release', 'copy:release']);
   
   grunt.registerTask('server', ['connect:dev:keepalive']);
   grunt.registerTask('server:debug', ['connect:debug:keepalive']);
+  grunt.registerTask('server:release', ['connect:release:keepalive']);
 };
