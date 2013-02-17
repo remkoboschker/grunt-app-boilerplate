@@ -215,7 +215,11 @@ module.exports = function(grunt) {
           base: 'dist/release'
         }
       }            
-    }      
+    },
+
+    casperjs: {
+      files: 'tests/casperjs/**/*.coffee'
+    }          
 
   });
 
@@ -237,6 +241,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bower');
   grunt.loadNpmTasks('grunt-targethtml');
+  grunt.loadNpmTasks('grunt-casperjs')
 
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
@@ -249,4 +254,6 @@ module.exports = function(grunt) {
   grunt.registerTask('server', ['connect:dev:keepalive']);
   grunt.registerTask('server:debug', ['connect:debug:keepalive']);
   grunt.registerTask('server:release', ['connect:release:keepalive']);
+
+  grunt.registerTask('test:casperjs', ['dist:debug', 'connect:debug', 'casperjs']);
 };
