@@ -21,6 +21,7 @@
     "grunt-contrib-connect": "0.1.0",
     "grunt-bower": "~0.5.0",
     "grunt-targethtml": "https://github.com/STRML/grunt-targethtml/tarball/master",
-    "grunt-casperjs": "https://github.com/colinhicks/grunt-casperjs/tarball/master"
+    "grunt-casperjs": "https://github.com/colinhicks/grunt-casperjs/tarball/master",
+    "grunt-mocha": "~0.2.2"
   }
 }

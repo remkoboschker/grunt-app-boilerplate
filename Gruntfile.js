@@ -214,16 +214,58 @@ module.exports = function(grunt) {
           port: 9003,
           base: 'dist/release'
         }
+      },
+      mocha : {
+        options: {
+          port: 9004,
+          base: 'tests/mocha'
+        }        
       }            
     },
 
     casperjs: {
-      files: 'tests/casperjs/**/*.coffee'
-    }          
+      all: 'tests/casperjs/**/*.coffee'
+    },
+
+    mocha: {
+        // This variant auto-includes 'bridge.js' so you do not have
+        // to include it in your HTML spec file. Instead, you must add an
+        // environment check before you run `mocha.run` in your HTML.
+        local: {
+            src: [ 'tests/mocha/index.html' ],
+            options: {
+                mocha: {
+                    //ignoreLeaks: false,
+                    //grep: 'food'
+                },
+
+                // Indicates whether 'mocha.run()' should be executed in 
+                // 'bridge.js'. If you include `mocha.run()` in your html spec, you
+                // must wrap it in a conditional check to not run if it is opened
+                // in PhantomJS
+                run: true
+            }
+        },
+
+        remote: {
+            options: {
+                mocha: {
+                    //ignoreLeaks: false,
+                    //grep: 'food'
+                },
+
+                // URLs passed through as options
+                urls: [ 'http://localhost:' + "<%= connect.mocha.options.port %>" + '/index.html' ],
+
+                // Indicates whether 'mocha.run()' should be executed in 'bridge.js'
+                run: true
+            }
+        }
+    }
 
   });
 
-  // These plugins provide necessary tasks.
+  // "official" tasks
   grunt.loadNpmTasks('grunt-contrib-coffee');
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-sass');
@@ -236,24 +278,37 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-mincss');
-
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
+  // "unofficial" tasks
   grunt.loadNpmTasks('grunt-bower');
   grunt.loadNpmTasks('grunt-targethtml');
   grunt.loadNpmTasks('grunt-casperjs');
+  grunt.loadNpmTasks('grunt-mocha');
 
+  // define aliases for scripts/styles/templates tasks
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
   grunt.registerTask('templates', ['handlebars']);
 
+  // default build task
   grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
+
+  // distrubution tasks, dependent on "default" task
   grunt.registerTask('dist:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
   grunt.registerTask('dist:release', ['clean:release', 'uglify', 'mincss', 'targethtml:release', 'copy:release']);
   
+  // server tasks
   grunt.registerTask('server', ['connect:dev:keepalive']);
   grunt.registerTask('server:debug', ['connect:debug:keepalive']);
   grunt.registerTask('server:release', ['connect:release:keepalive']);
+  grunt.registerTask('server:mocha', ['connect:mocha:keepalive']);
 
+  // CasperJS tests
   grunt.registerTask('test:casperjs', ['dist:debug', 'connect:debug', 'casperjs']);
+
+  // Mocha tests
+  grunt.registerTask('test:mocha:local', ['mocha:local']);
+  grunt.registerTask('test:mocha:remote', ['connect:mocha', 'mocha:remote']);
+  grunt.registerTask('test:mocha', ['test:mocha:local', 'test:mocha:remote']);
 };
