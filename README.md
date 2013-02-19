@@ -57,7 +57,7 @@ Look at `Gruntfile.js` to see all available tasks (should be self-descriptive)
 
 __Note__: at the moment "dist" tasks should be run after "default" build task. Also, "server" tasks should be run after "dist:debug" task.
 
-There id no dependency defined as it makes no sense to repeat "dist:debug" when no files were modifies since last test run.
+There is no dependency defined as it makes no sense to repeat "dist:debug" when no files were modifies since last test run.
 
 Folders structure
 =================
