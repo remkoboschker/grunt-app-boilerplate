@@ -241,7 +241,7 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-bower');
   grunt.loadNpmTasks('grunt-targethtml');
-  grunt.loadNpmTasks('grunt-casperjs')
+  grunt.loadNpmTasks('grunt-casperjs');
 
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
