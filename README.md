@@ -34,14 +34,6 @@ npm install
 bower install
 ```
 
-Run 
-
-```
-grunt bower
-```
-
-which should copy required frontend libraries (such as jQuery, Handlebars etc) into www_root folder.
-
 Now, we can run 
 
 ```
