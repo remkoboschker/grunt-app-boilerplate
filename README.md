@@ -12,7 +12,8 @@ This project is a simple boilerplate for javascript browser-based applications. 
 Under the hood, following projects are used:
 
 * GruntJS (building process)
-* HTML5 Boilerplate (normalize.css, .htaccess and other "trimmings" :)
+* Bower by Twitter
+* HTML5 Boilerplate (.htaccess, robots.txt and other "trimmings" :)
 * Coffescript
 * SASS
 * Handlebars
