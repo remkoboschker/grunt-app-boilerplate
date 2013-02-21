@@ -19,14 +19,19 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: {
-          'dist/debug/scripts/vendors.js': ['www_root/bower/{jquery,underscore,handlebars}/*.js'],
-          'dist/debug/scripts/main.js': ['www_root/{templates,scripts,modules}/**/*.js']
+          'build/debug/scripts/vendors.js': [
+            'www_root/vendor/jquery/jquery.js',
+            'www_root/vendor/handlebars/handlebars.js'
+           ],
+          'build/debug/scripts/main.js': ['www_root/{templates,scripts,modules}/**/*.js']
         }
       },
       styles: {
         files: {
-          'dist/debug/styles/vendors.css': ['www_root/vendor/h5bp/css/normalize.css', 'www_root/vendor/h5bp/css/main.css'],
-          'dist/debug/styles/main.css': ['www_root/{styles,modules}/**/*.css']
+          'build/debug/styles/vendors.css': [
+            'www_root/vendor/normalize-css/normalize.css'
+          ],
+          'build/debug/styles/main.css': ['www_root/{styles,modules}/**/*.css']
         }
       }      
     },
@@ -34,9 +39,9 @@ module.exports = function(grunt) {
     uglify: {
       release: {
         expand: true,
-        cwd: 'dist/debug/',
+        cwd: 'build/debug/',
         src: ['scripts/vendors.js', 'scripts/main.js'],
-        dest: 'dist/release/',
+        dest: 'build/release/',
         ext: '.min.js'
       }
     },
@@ -44,9 +49,9 @@ module.exports = function(grunt) {
     mincss: {
       release: {
         expand: true,
-        cwd: 'dist/debug/',
+        cwd: 'build/debug/',
         src: ['styles/vendors.css', 'styles/main.css'],
-        dest: 'dist/release/',
+        dest: 'build/release/',
         ext: '.min.css'
       }
     },
@@ -68,6 +73,9 @@ module.exports = function(grunt) {
         globals: {}
       },
       gruntfile: {
+        options: {
+          scripturl:true
+        },
         src: 'Gruntfile.js'
       },
       app: {
@@ -75,10 +83,6 @@ module.exports = function(grunt) {
       }
     },
 
-/*    qunit: {
-      files: ['test/**.html']
-    },
-*/
     watch: {
       gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -99,14 +103,13 @@ module.exports = function(grunt) {
     },
 
     bower: {
-      dev: {
-        dest: 'www_root/bower/',
-        options: {
-          basePath: 'components',
-          stripJsAffix: true
+      install: {
+        options: { 
+          targetDir: 'www_root/vendor/',
+          cleanup: true
         }
       }
-    },
+    },    
 
     coffee: {
       dev: {
@@ -161,20 +164,21 @@ module.exports = function(grunt) {
     targethtml: {
       debug: {
         files: {
-          "dist/debug/index.html": "www_root/index.html"
+          "build/debug/index.html": "www_root/index.html"
         }
       },
       release: {
         files: {
-          "dist/release/index.html": "www_root/index.html"
+          "build/release/index.html": "www_root/index.html"
         }
       }          
     },
 
     clean: {
-      dev: ["www_root/{scripts,styles,templates}/"],
-      debug: ["dist/debug/"],
-      release: ["dist/release/"]
+      dev: ["www_root/{scripts,styles,templates,vendor}/"],
+      components: ["components/"],
+      debug: ["build/debug/"],
+      release: ["build/release/"]
     },
 
     copy: {
@@ -183,7 +187,7 @@ module.exports = function(grunt) {
           expand: true, 
           cwd: 'www_root/', 
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
-          dest: "dist/debug/" 
+          dest: "build/debug/" 
         }]
       },
      release: {
@@ -191,7 +195,7 @@ module.exports = function(grunt) {
           expand: true, 
           cwd: 'www_root/', 
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
-          dest: "dist/release/" 
+          dest: "build/release/" 
         }]
       }      
     },
@@ -206,13 +210,13 @@ module.exports = function(grunt) {
       debug: {
         options: {
           port: 9002,
-          base: 'dist/debug'
+          base: 'build/debug'
         }
       },
       release: {
         options: {
           port: 9003,
-          base: 'dist/release'
+          base: 'build/release'
         }
       },
       mocha : {
@@ -281,7 +285,7 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // "unofficial" tasks
-  grunt.loadNpmTasks('grunt-bower');
+  grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-targethtml');
   grunt.loadNpmTasks('grunt-casperjs');
   grunt.loadNpmTasks('grunt-mocha');
@@ -290,14 +294,20 @@ module.exports = function(grunt) {
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
   grunt.registerTask('templates', ['handlebars']);
+  grunt.registerTask('vendor', ['bower']);
 
   // default build task
-  grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
+  grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles', 'vendor']);
 
-  // distrubution tasks, dependent on "default" task
-  grunt.registerTask('dist:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
-  grunt.registerTask('dist:release', ['clean:release', 'uglify', 'mincss', 'targethtml:release', 'copy:release']);
-  
+  // build tasks, dependent on "default" task
+  grunt.registerTask('build:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
+  grunt.registerTask('build:release', ['clean:release', 'uglify', 'mincss', 'targethtml:release', 'copy:release']);
+
+  // debug build + test
+  grunt.registerTask('run:debug', ['default', 'build:debug', 'test:casperjs']);
+  // release build + server
+  grunt.registerTask('run:full', ['run:debug', 'build:release', 'server:release']);
+
   // server tasks
   grunt.registerTask('server', ['connect:dev:keepalive']);
   grunt.registerTask('server:debug', ['connect:debug:keepalive']);
@@ -305,7 +315,7 @@ module.exports = function(grunt) {
   grunt.registerTask('server:mocha', ['connect:mocha:keepalive']);
 
   // CasperJS tests
-  grunt.registerTask('test:casperjs', ['dist:debug', 'connect:debug', 'casperjs']);
+  grunt.registerTask('test:casperjs', ['connect:debug', 'casperjs']);
 
   // Mocha tests
   grunt.registerTask('test:mocha:local', ['mocha:local']);
