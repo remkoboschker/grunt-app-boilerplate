@@ -48,16 +48,16 @@ Usage
 
 Look at `Gruntfile.js` to see all available tasks (should be self-descriptive)
 
-__Note__: at the moment "dist" tasks should be run after "default" build task. Also, "server" tasks should be run after "dist:debug" task.
+__Note__: at the moment "build" tasks should be run after "default" build task. Also, "server" tasks should be run after "build:debug" task.
 
-There is no dependency defined as it makes no sense to repeat "dist:debug" when no files were modifies since last test run.
+There is no dependency defined as it makes no sense to repeat "build:debug" when no files were modifies since last test run.
 
 Folders structure
 =================
 
 * app - application files (sources)
 * components - bower stores all installed files there
-* dist - distribution files
+* build - distribution files
 	* debug - files concatenated
 	* release - files concatemated and minified
 * node_modules - node modules
