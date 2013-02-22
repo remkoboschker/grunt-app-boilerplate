@@ -24,6 +24,7 @@
     "grunt-mocha": "latest",
     "grunt-bower-task": "latest",
     "connect-modrewrite": "latest",
-    "grunt-bump": "latest"
+    "grunt-bump": "latest",
+    "grunt-open": "latest"
   }
 }

@@ -84,10 +84,10 @@ module.exports = function(grunt) {
     },
 
     watch: {
-      gruntfile: {
+      /*gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
         tasks: ['jshint:gruntfile']
-      },
+      },*/
       app_scripts: {
         files: 'app/<%= coffee.dev.src %>',
         tasks: ['scripts']
@@ -277,7 +277,22 @@ module.exports = function(grunt) {
                 run: true
             }
         }
-    }
+    },
+
+    open : {
+      dev : {
+        path: 'http://localhost:9001'
+      },
+      debug : {
+        path: 'http://localhost:9002'
+      },
+      release : {
+        path: 'http://localhost:9003'
+      },
+      test: {
+        path: 'http://localhost:9004'
+      }
+    }    
 
   });
 
@@ -302,6 +317,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-casperjs');
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-bump');
+  grunt.loadNpmTasks('grunt-open');
 
   // define aliases for scripts/styles/templates tasks
   grunt.registerTask('scripts', ['coffee', 'jshint']);
@@ -322,10 +338,10 @@ module.exports = function(grunt) {
   grunt.registerTask('run:full', ['run:debug', 'build:release', 'server:release']);
 
   // server tasks
-  grunt.registerTask('server', ['connect:dev:keepalive']);
-  grunt.registerTask('server:debug', ['connect:debug:keepalive']);
-  grunt.registerTask('server:release', ['connect:release:keepalive']);
-  grunt.registerTask('server:mocha', ['connect:mocha:keepalive']);
+  grunt.registerTask('server', ['connect:dev', 'open:dev', 'watch']);
+  grunt.registerTask('server:debug', ['connect:debug', 'open:debug', 'watch']);
+  grunt.registerTask('server:release', ['connect:release', 'open:release', 'watch']);
+  grunt.registerTask('server:mocha', ['connect:mocha', 'open:test', 'watch']);
 
   // CasperJS tests
   grunt.registerTask('test:casperjs', ['connect:debug', 'casperjs']);
