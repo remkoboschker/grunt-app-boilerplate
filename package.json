@@ -25,6 +25,7 @@
     "grunt-bower-task": "latest",
     "connect-modrewrite": "latest",
     "grunt-bump": "latest",
-    "grunt-open": "latest"
+    "grunt-open": "latest",
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git"
   }
 }

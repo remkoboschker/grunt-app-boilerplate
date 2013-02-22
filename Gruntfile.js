@@ -90,15 +90,19 @@ module.exports = function(grunt) {
       },*/
       app_scripts: {
         files: 'app/<%= coffee.dev.src %>',
-        tasks: ['scripts']
+        tasks: ['scripts', 'reload']
       },
       app_styles: {
         files: 'app/<%= sass.dev.files[0].src %>',
-        tasks: ['styles']
+        tasks: ['styles', 'reload']
       },
       app_templates: {
         files: 'app/<%= handlebars.dev.files[0].src %>',
-        tasks: ['templates']
+        tasks: ['templates', 'reload']
+      },
+      dummy: {
+        files: [],
+        tasks: []
       }            
     },
 
@@ -282,7 +286,7 @@ module.exports = function(grunt) {
     open : {
       dev : {
         path: 'http://localhost:9001'
-      },
+      },    
       debug : {
         path: 'http://localhost:9002'
       },
@@ -292,7 +296,14 @@ module.exports = function(grunt) {
       test: {
         path: 'http://localhost:9004'
       }
-    }    
+    },
+
+    reload: {
+        // reverse proxy port
+        port: 8001,
+        //port: 35729,  // default LiveReload chrome extension port
+        //liveReload: {}
+    }        
 
   });
 
@@ -318,6 +329,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-mocha');
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-open');
+  grunt.loadNpmTasks('grunt-reload');
 
   // define aliases for scripts/styles/templates tasks
   grunt.registerTask('scripts', ['coffee', 'jshint']);
@@ -338,10 +350,10 @@ module.exports = function(grunt) {
   grunt.registerTask('run:full', ['run:debug', 'build:release', 'server:release']);
 
   // server tasks
-  grunt.registerTask('server', ['connect:dev', 'open:dev', 'watch']);
-  grunt.registerTask('server:debug', ['connect:debug', 'open:debug', 'watch']);
-  grunt.registerTask('server:release', ['connect:release', 'open:release', 'watch']);
-  grunt.registerTask('server:mocha', ['connect:mocha', 'open:test', 'watch']);
+  grunt.registerTask('server', ['connect:dev', 'reload', 'open:dev', 'watch']);
+  grunt.registerTask('server:debug', ['connect:debug', 'open:debug', 'watch:dummy']);
+  grunt.registerTask('server:release', ['connect:release', 'open:release', 'watch:dummy']);
+  grunt.registerTask('server:mocha', ['connect:mocha', 'open:test', 'watch:dummy']);
 
   // CasperJS tests
   grunt.registerTask('test:casperjs', ['connect:debug', 'casperjs']);
