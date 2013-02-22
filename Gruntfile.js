@@ -207,7 +207,7 @@ module.exports = function(grunt) {
 
           return [
             modRewrite([
-              '^/test$ /index.html'
+              '^/#/.*$ /index.html [L]'
             ]),
             connect.static(options.base)
           ]
@@ -301,6 +301,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-targethtml');
   grunt.loadNpmTasks('grunt-casperjs');
   grunt.loadNpmTasks('grunt-mocha');
+  grunt.loadNpmTasks('grunt-bump');
 
   // define aliases for scripts/styles/templates tasks
   grunt.registerTask('scripts', ['coffee', 'jshint']);
