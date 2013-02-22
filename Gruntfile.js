@@ -72,12 +72,12 @@ module.exports = function(grunt) {
         browser: true,
         globals: {}
       },
-      gruntfile: {
+      /*gruntfile: {
         options: {
           scripturl:true
         },
         src: 'Gruntfile.js'
-      },
+      },*/
       app: {
         src: ['www_root/{scripts,modules}/**/*.js']
       }
@@ -201,6 +201,18 @@ module.exports = function(grunt) {
     },
 
     connect: {
+      options: {
+        middleware: function(connect, options) {
+          var modRewrite = require('connect-modrewrite');
+
+          return [
+            modRewrite([
+              '^/test$ /index.html'
+            ]),
+            connect.static(options.base)
+          ]
+        }
+      },      
       dev: {
         options: {
           port: 9001,
