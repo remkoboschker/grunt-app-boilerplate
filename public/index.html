@@ -12,7 +12,8 @@
 
         <!--(if target dummy)><!-->
         <link rel="stylesheet" href="/vendor/normalize-css/normalize.css">
-        <link rel="stylesheet" href="/styles/main.css">
+        <link rel="stylesheet" href="/modules/hello/styles/hello.css">
+        <link rel="stylesheet" href="/styles/app.css">
         <!--<!(endif)-->
 
         <!--(if target debug)>
@@ -36,8 +37,13 @@
         <!--(if target dummy)><!-->
         <script src="/vendor/jquery/jquery.js"></script>
         <script src="/vendor/handlebars/handlebars.js"></script>
-        <script src="/templates/index.js"></script>
+
+        <script src="/modules/hello/templates/hello.js"></script>
+        <script src="/templates/layout.js"></script>
+
+        <script src="/modules/hello/scripts/hello.js"></script>
         <script src="/scripts/app.js"></script>
+        
         <!--<script data-main="/scripts/config" src="/vendor/require/require.js"></script><!-->
         <script>__reloadServerUrl="ws://localhost:8001";</script>
         <script type="text/javascript" src="//localhost:8001/__reload/client.js"></script>

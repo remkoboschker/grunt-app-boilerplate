@@ -23,7 +23,10 @@ module.exports = function(grunt) {
             'public/vendor/jquery/jquery.js',
             'public/vendor/handlebars/handlebars.js'
            ],
-          'build/debug/scripts/main.js': ['public/{templates,scripts,modules}/**/*.js']
+          'build/debug/scripts/main.js': [
+            'public/modules/**/{templates,scripts}/**/*.js',
+            'public/{templates,scripts}/**/*.js'
+          ]
         }
       },
       styles: {
@@ -31,7 +34,10 @@ module.exports = function(grunt) {
           'build/debug/styles/vendor.css': [
             'public/vendor/normalize-css/normalize.css'
           ],
-          'build/debug/styles/main.css': ['public/{styles,modules}/**/*.css']
+          'build/debug/styles/main.css': [
+            'public/modules/**/styles/**/*.css',
+            'public/styles/**/*.css'
+          ] 
         }
       }      
     },
@@ -79,7 +85,10 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },*/
       app: {
-        src: ['public/{scripts,modules}/**/*.js']
+        src: [
+          'public/scripts/**/*.js',
+          'public/modules/**/scripts/**/*.js',
+        ]
       }
     },
 
@@ -110,7 +119,10 @@ module.exports = function(grunt) {
       dev: {
         expand: true,
         cwd: 'app/',
-        src: ['{scripts,modules}/**/*.coffee'],
+        src: [
+          'scripts/**/*.coffee',
+          'modules/**/scripts/**/*.coffee'
+        ],
         dest: "public/",
         ext: '.js'
       }
@@ -126,7 +138,10 @@ module.exports = function(grunt) {
         files: [{
           expand: true,
           cwd: 'app/',
-          src: ['{styles,modules}/**/*.scss'],
+          src: [
+            'styles/**/*.scss',
+            'modules/**/styles/**/*.scss'
+          ],
           dest: "public/",
           ext: '.css'
         }]
@@ -138,18 +153,45 @@ module.exports = function(grunt) {
         options: {
           namespace: "app.templates",
           processName: function(filename) {
-              // trim "app/tempaltes" from path
-              filename = filename.substring(filename.indexOf('/')+1);
-              filename = filename.substring(filename.indexOf('/')+1);
+            // Return new array with duplicate values removed
+            Array.prototype.unique =
+              function() {
+                var a = [];
+                var l = this.length;
+                for(var i=0; i<l; i++) {
+                  for(var j=i+1; j<l; j++) {
+                    // If this[i] is found later in the array
+                    if (this[i] === this[j])
+                      j = ++i;
+                  }
+                  a.push(this[i]);
+                }
+                return a;
+              };
 
               // trim extension
-              return filename.substring(0, filename.lastIndexOf('.'));
+              filename = filename.substring(0, filename.lastIndexOf('.'));
+
+              var parts = filename.split('/');
+
+              // remove "app" part
+              parts.shift(); 
+
+              // remove "templates" part
+              parts = parts.filter(function(part){
+                return (part !== 'templates');
+              });
+              
+              return parts.unique().join('/');
           }          
         },
         files: [{
           expand: true,
           cwd: 'app/',
-          src: ["{templates,modules}/**/*.hbs"],
+          src: [
+            "templates/**/*.hbs",
+            "modules/**/templates/**/*.hbs"
+          ],
           dest: "public/",
           ext: '.js'
         }]
