@@ -64,4 +64,4 @@ Folders structure
 * tests - unit and integrational tests
 	* casperjs - integrational tests
 	* mocha - unit tests
-* www_root - development www root
+* public - development www root

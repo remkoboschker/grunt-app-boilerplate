@@ -1,6 +1,6 @@
 {
   "name": "grunt-app-boilerplate",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "author": "Andrei Bahdanovich <bahdanovich@gmail.com>",
   "homepage": "http://grunt-bp.dev/",
   "license": "MIT",
@@ -22,7 +22,6 @@
     "grunt-targethtml": "https://github.com/STRML/grunt-targethtml/tarball/master",
     "grunt-casperjs": "https://github.com/colinhicks/grunt-casperjs/tarball/master",
     "grunt-mocha": "latest",
-    "grunt-bower-task": "latest",
     "connect-modrewrite": "latest",
     "grunt-bump": "latest",
     "grunt-open": "latest",

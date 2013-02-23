@@ -19,19 +19,19 @@ module.exports = function(grunt) {
       },
       scripts: {
         files: {
-          'build/debug/scripts/vendors.js': [
-            'www_root/vendor/jquery/jquery.js',
-            'www_root/vendor/handlebars/handlebars.js'
+          'build/debug/scripts/vendor.js': [
+            'public/vendor/jquery/jquery.js',
+            'public/vendor/handlebars/handlebars.js'
            ],
-          'build/debug/scripts/main.js': ['www_root/{templates,scripts,modules}/**/*.js']
+          'build/debug/scripts/main.js': ['public/{templates,scripts,modules}/**/*.js']
         }
       },
       styles: {
         files: {
-          'build/debug/styles/vendors.css': [
-            'www_root/vendor/normalize-css/normalize.css'
+          'build/debug/styles/vendor.css': [
+            'public/vendor/normalize-css/normalize.css'
           ],
-          'build/debug/styles/main.css': ['www_root/{styles,modules}/**/*.css']
+          'build/debug/styles/main.css': ['public/{styles,modules}/**/*.css']
         }
       }      
     },
@@ -40,7 +40,7 @@ module.exports = function(grunt) {
       release: {
         expand: true,
         cwd: 'build/debug/',
-        src: ['scripts/vendors.js', 'scripts/main.js'],
+        src: ['scripts/vendor.js', 'scripts/main.js'],
         dest: 'build/release/',
         ext: '.min.js'
       }
@@ -50,7 +50,7 @@ module.exports = function(grunt) {
       release: {
         expand: true,
         cwd: 'build/debug/',
-        src: ['styles/vendors.css', 'styles/main.css'],
+        src: ['styles/vendor.css', 'styles/main.css'],
         dest: 'build/release/',
         ext: '.min.css'
       }
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
         src: 'Gruntfile.js'
       },*/
       app: {
-        src: ['www_root/{scripts,modules}/**/*.js']
+        src: ['public/{scripts,modules}/**/*.js']
       }
     },
 
@@ -104,15 +104,6 @@ module.exports = function(grunt) {
         files: [],
         tasks: []
       }            
-    },
-
-    bower: {
-      install: {
-        options: { 
-          targetDir: 'www_root/vendor/',
-          cleanup: true
-        }
-      }
     },    
 
     coffee: {
@@ -120,7 +111,7 @@ module.exports = function(grunt) {
         expand: true,
         cwd: 'app/',
         src: ['{scripts,modules}/**/*.coffee'],
-        dest: "www_root/",
+        dest: "public/",
         ext: '.js'
       }
     },
@@ -136,7 +127,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'app/',
           src: ['{styles,modules}/**/*.scss'],
-          dest: "www_root/",
+          dest: "public/",
           ext: '.css'
         }]
       }
@@ -159,7 +150,7 @@ module.exports = function(grunt) {
           expand: true,
           cwd: 'app/',
           src: ["{templates,modules}/**/*.hbs"],
-          dest: "www_root/",
+          dest: "public/",
           ext: '.js'
         }]
       }
@@ -168,18 +159,18 @@ module.exports = function(grunt) {
     targethtml: {
       debug: {
         files: {
-          "build/debug/index.html": "www_root/index.html"
+          "build/debug/index.html": "public/index.html"
         }
       },
       release: {
         files: {
-          "build/release/index.html": "www_root/index.html"
+          "build/release/index.html": "public/index.html"
         }
       }          
     },
 
     clean: {
-      dev: ["www_root/{scripts,styles,templates,vendor}/"],
+      dev: ["public/{scripts,styles,templates}/"],
       components: ["components/"],
       debug: ["build/debug/"],
       release: ["build/release/"]
@@ -189,15 +180,15 @@ module.exports = function(grunt) {
      debug: {
         files: [{ 
           expand: true, 
-          cwd: 'www_root/', 
+          cwd: 'public/', 
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "build/debug/" 
         }]
       },
-     release: {
+      release: {
         files: [{ 
           expand: true, 
-          cwd: 'www_root/', 
+          cwd: 'public/', 
           src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "build/release/" 
         }]
@@ -220,7 +211,7 @@ module.exports = function(grunt) {
       dev: {
         options: {
           port: 9001,
-          base: 'www_root'
+          base: 'public'
         }
       },
       debug: {
@@ -323,7 +314,6 @@ module.exports = function(grunt) {
   //grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // "unofficial" tasks
-  grunt.loadNpmTasks('grunt-bower-task');
   grunt.loadNpmTasks('grunt-targethtml');
   grunt.loadNpmTasks('grunt-casperjs');
   grunt.loadNpmTasks('grunt-mocha');
@@ -335,10 +325,9 @@ module.exports = function(grunt) {
   grunt.registerTask('scripts', ['coffee', 'jshint']);
   grunt.registerTask('styles', ['sass']);
   grunt.registerTask('templates', ['handlebars']);
-  grunt.registerTask('vendor', ['bower']);
 
   // default build task
-  grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles', 'vendor']);
+  grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
 
   // build tasks, dependent on "default" task
   grunt.registerTask('build:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
