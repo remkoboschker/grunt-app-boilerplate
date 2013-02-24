@@ -1,6 +1,6 @@
 class Module_Hello
 	constructor: (@name) ->
-		@name = 'World' unless name?
+		@name = 'world' unless name?
 
 	setName: (name) ->
 		@name = name

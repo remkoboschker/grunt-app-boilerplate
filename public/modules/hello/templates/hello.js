@@ -10,5 +10,5 @@ this["app"]["templates"]["modules/hello"] = Handlebars.template(function (Handle
   foundHelper = helpers.name;
   if (foundHelper) { stack1 = foundHelper.call(depth0, {hash:{},data:data}); }
   else { stack1 = depth0.name; stack1 = typeof stack1 === functionType ? stack1.apply(depth0) : stack1; }
-  buffer += escapeExpression(stack1) + "! :}</h1>\n</div>\n";
+  buffer += escapeExpression(stack1) + "! :D</h1>\n</div>\n";
   return buffer;});

@@ -1,6 +1,13 @@
-.module-hello-container h1 {
+.module-hello-container { 
 	border-radius: 10px;
-	margin: 20px;
-	padding: 10px;
-	background-color: #def;
+	padding: 10px 0;
+	background-color: #ccc;
+	width: 980px;
+	margin: 10px auto;
+
+	h1 {
+		padding: 10px;
+		background-color: #eee;
+		margin: 0 1px;
+	}
 }

@@ -6,7 +6,7 @@
     function Module_Hello(name) {
       this.name = name;
       if (name == null) {
-        this.name = 'World';
+        this.name = 'world';
       }
     }
 

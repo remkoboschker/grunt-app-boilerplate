@@ -98,17 +98,28 @@ module.exports = function(grunt) {
         tasks: ['jshint:gruntfile']
       },*/
       app_scripts: {
-        files: 'app/<%= coffee.dev.src %>',
+        files: [
+          'app/scripts/**/*.coffee',
+          'app/modules/**/scripts/**/*.coffee'
+        ],
         tasks: ['scripts', 'reload']
       },
       app_styles: {
-        files: 'app/<%= sass.dev.files[0].src %>',
+        files: [
+          'app/styles/**/*.scss',
+          'app/modules/**/styles/**/*.scss'
+        ],
         tasks: ['styles', 'reload']
       },
       app_templates: {
-        files: 'app/<%= handlebars.dev.files[0].src %>',
+        files: [
+          "app/templates/**/*.hbs",
+          "app/modules/**/templates/**/*.hbs"
+        ],
         tasks: ['templates', 'reload']
       },
+
+      // dummy task for keeping server connection alive
       dummy: {
         files: [],
         tasks: []
@@ -117,14 +128,16 @@ module.exports = function(grunt) {
 
     coffee: {
       dev: {
-        expand: true,
-        cwd: 'app/',
-        src: [
-          'scripts/**/*.coffee',
-          'modules/**/scripts/**/*.coffee'
-        ],
-        dest: "public/",
-        ext: '.js'
+        files: [{
+          expand: true,
+          cwd: 'app/',
+          src: [
+            'scripts/**/*.coffee',
+            'modules/**/scripts/**/*.coffee'
+          ],
+          dest: "public/",
+          ext: '.js'
+        }]
       }
     },
 
