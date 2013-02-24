@@ -11,7 +11,7 @@ module.exports = function(grunt) {
       ' * Copyright (c) <%= grunt.template.today("yyyy") %> <%= pkg.author %>\n' +
       '<%= pkg.license ? " * Licensed: " + pkg.license + "\\n" : "" %> */\n\n',
 
-    // Task configuration.
+    // concatenate files
     concat: {
       options: {
         banner: '<%= banner %>',
@@ -42,6 +42,7 @@ module.exports = function(grunt) {
       }      
     },
 
+    // build minimized JS files
     uglify: {
       release: {
         expand: true,
@@ -52,6 +53,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // build minimized CSS files
     mincss: {
       release: {
         expand: true,
@@ -62,6 +64,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // JSHint sources
     jshint: {
       options: {
         curly: true,
@@ -92,6 +95,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // monitor source files for changes and fire compile and reload tasks when some file changes
     watch: {
       /*gruntfile: {
         files: '<%= jshint.gruntfile.src %>',
@@ -126,6 +130,7 @@ module.exports = function(grunt) {
       }            
     },    
 
+    // compile CoffeeScripts into JavaScripts
     coffee: {
       dev: {
         files: [{
@@ -141,6 +146,7 @@ module.exports = function(grunt) {
       }
     },
 
+    //compile SASS files into CSS
     sass: {                         
       dev: {                      
         options: {                
@@ -161,6 +167,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // produce pre-compiled templates
     handlebars: {
       dev: {
         options: {
@@ -211,6 +218,7 @@ module.exports = function(grunt) {
       }
     },
 
+    // process conditionals in "public/undex.html" and build apropriate debug/release version
     targethtml: {
       debug: {
         files: {
@@ -224,13 +232,14 @@ module.exports = function(grunt) {
       }          
     },
 
+    // clean up folders
     clean: {
       dev: ["public/{scripts,styles,templates}/"],
-      components: ["components/"],
       debug: ["build/debug/"],
       release: ["build/release/"]
     },
 
+    // copy additional files (ex. icons, robots.txt) into "build" folder
     copy: {
      debug: {
         files: [{ 
@@ -250,6 +259,7 @@ module.exports = function(grunt) {
       }      
     },
 
+    // connect middleware (http server serving static files)
     connect: {
       options: {
         middleware: function(connect, options) {
@@ -289,10 +299,12 @@ module.exports = function(grunt) {
       }            
     },
 
+    // casper.js functional tests (using phantom.js headless webkit browser)
     casperjs: {
       all: 'tests/casperjs/**/*.coffee'
     },
 
+    // mocha unit tests
     mocha: {
         // This variant auto-includes 'bridge.js' so you do not have
         // to include it in your HTML spec file. Instead, you must add an
@@ -329,6 +341,7 @@ module.exports = function(grunt) {
         }
     },
 
+    // open page in browser when http server starts
     open : {
       dev : {
         path: 'http://localhost:9001'
@@ -344,12 +357,13 @@ module.exports = function(grunt) {
       }
     },
 
+    // reload page when files change
     reload: {
         // reverse proxy port
         port: 8001,
         //port: 35729,  // default LiveReload chrome extension port
         //liveReload: {}
-    }        
+    }
 
   });
 
