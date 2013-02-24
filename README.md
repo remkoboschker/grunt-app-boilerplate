@@ -56,7 +56,6 @@ Folders structure
 =================
 
 * app - application files (sources)
-* components - bower stores all installed files there
 * build - distribution files
 	* debug - files concatenated
 	* release - files concatemated and minified
