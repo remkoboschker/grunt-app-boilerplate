@@ -1,6 +1,6 @@
-components/
 build/
 node_modules/
+public/modules/
 public/vendor/
 public/scripts/
 public/styles/
