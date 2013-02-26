@@ -132,6 +132,9 @@ module.exports = function(grunt) {
 
     // compile CoffeeScripts into JavaScripts
     coffee: {
+      options: {
+        bare: true
+      },
       dev: {
         files: [{
           expand: true,
@@ -363,7 +366,40 @@ module.exports = function(grunt) {
         port: 8001,
         //port: 35729,  // default LiveReload chrome extension port
         //liveReload: {}
+    },
+
+    // require.js module loader
+    requirejs: {
+      compile: {
+        options: {
+          mainConfigFile: "public/scripts/config.js",
+          out: "build/debug/scripts/require.js",
+
+          // root application module
+          name: "config",
+
+          // do not wrap everything in an IIFE
+          wrap: false          
+        }
+      }
     }
+
+    /*requirejs: {
+      // Include the main configuration file.
+      mainConfigFile: "app/config.js",
+
+      // Also include the JamJS configuration file.
+      jamConfig: "/vendor/jam/require.config.js",
+
+      // Output file.
+      out: "dist/debug/require.js",
+
+      // Root application module.
+      name: "config",
+
+      // Do not wrap everything in an IIFE.
+      wrap: false
+    },*/                
 
   });
 
@@ -380,7 +416,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-connect');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-mincss');
-  //grunt.loadNpmTasks('grunt-contrib-requirejs');
+  grunt.loadNpmTasks('grunt-contrib-requirejs');
 
   // "unofficial" tasks
   grunt.loadNpmTasks('grunt-targethtml');

@@ -4,6 +4,7 @@
   "dependencies": {
     "jquery": "~1.9.1",
     "handlebars": "~1.0.0-rc.2",
-    "normalize-css": "~2.1.0"
+    "normalize-css": "~2.1.0",
+    "requirejs": "~2.1.4"
   }
 }
