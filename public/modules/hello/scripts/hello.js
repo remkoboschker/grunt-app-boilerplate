@@ -1,27 +1,24 @@
-(function() {
-  var Module_Hello;
+var Module_Hello;
 
-  Module_Hello = (function() {
+Module_Hello = (function() {
 
-    function Module_Hello(name) {
-      this.name = name;
-      if (name == null) {
-        this.name = 'world';
-      }
+  function Module_Hello(name) {
+    this.name = name;
+    if (name == null) {
+      this.name = 'world';
     }
+  }
 
-    Module_Hello.prototype.setName = function(name) {
-      return this.name = name;
-    };
+  Module_Hello.prototype.setName = function(name) {
+    return this.name = name;
+  };
 
-    Module_Hello.prototype.getName = function() {
-      return this.name;
-    };
+  Module_Hello.prototype.getName = function() {
+    return this.name;
+  };
 
-    return Module_Hello;
+  return Module_Hello;
 
-  })();
+})();
 
-  window['Module_Hello'] = Module_Hello;
-
-}).call(this);
+window['Module_Hello'] = Module_Hello;
