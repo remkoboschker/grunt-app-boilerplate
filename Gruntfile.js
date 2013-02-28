@@ -17,18 +17,18 @@ module.exports = function(grunt) {
         banner: '<%= banner %>',
         stripBanners: true
       },
-      scripts: {
-        files: {
-          'build/debug/scripts/vendor.js': [
-            'public/vendor/jquery/jquery.js',
-            'public/vendor/handlebars/handlebars.js'
-           ],
-          'build/debug/scripts/main.js': [
-            'public/modules/**/{templates,scripts}/**/*.js',
-            'public/{templates,scripts}/**/*.js'
-          ]
-        }
-      },
+      // scripts: {
+      //   files: {
+      //     'build/debug/scripts/vendor.js': [
+      //       'public/vendor/jquery/jquery.js',
+      //       'public/vendor/handlebars/handlebars.js'
+      //      ],
+      //     'build/debug/scripts/main.js': [
+      //       'public/modules/**/{templates,scripts}/**/*.js',
+      //       'public/{templates,scripts}/**/*.js'
+      //     ]
+      //   }
+      // },
       styles: {
         files: {
           'build/debug/styles/vendor.css': [
@@ -43,15 +43,15 @@ module.exports = function(grunt) {
     },
 
     // build minimized JS files
-    uglify: {
-      release: {
-        expand: true,
-        cwd: 'build/debug/',
-        src: ['scripts/vendor.js', 'scripts/main.js'],
-        dest: 'build/release/',
-        ext: '.min.js'
-      }
-    },
+    // uglify: {
+    //   release: {
+    //     expand: true,
+    //     cwd: 'build/debug/',
+    //     src: ['scripts/vendor.js', 'scripts/main.js'],
+    //     dest: 'build/release/',
+    //     ext: '.min.js'
+    //   }
+    // },
 
     // build minimized CSS files
     mincss: {
@@ -81,18 +81,18 @@ module.exports = function(grunt) {
         browser: true,
         globals: {}
       },
-      /*gruntfile: {
-        options: {
-          scripturl:true
-        },
-        src: 'Gruntfile.js'
-      },*/
-      app: {
-        src: [
-          'public/scripts/**/*.js',
-          'public/modules/**/scripts/**/*.js',
-        ]
-      }
+      // gruntfile: {
+      //   options: {
+      //     scripturl:true
+      //   },
+      //   src: 'Gruntfile.js'
+      // },
+      // app: {
+      //   src: [
+      //     'public/scripts/**/*.js',
+      //     'public/modules/**/scripts/**/*.js',
+      //   ]
+      // }
     },
 
     // monitor source files for changes and fire compile and reload tasks when some file changes
@@ -174,7 +174,8 @@ module.exports = function(grunt) {
     handlebars: {
       dev: {
         options: {
-          namespace: "app.templates",
+          namespace: false,
+          amd: true,
           processName: function(filename) {
             // Return new array with duplicate values removed
             Array.prototype.unique =
@@ -248,7 +249,7 @@ module.exports = function(grunt) {
         files: [{ 
           expand: true, 
           cwd: 'public/', 
-          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess', 'vendor/requirejs/require.js'], 
           dest: "build/debug/" 
         }]
       },
@@ -256,7 +257,7 @@ module.exports = function(grunt) {
         files: [{ 
           expand: true, 
           cwd: 'public/', 
-          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess', 'vendor/requirejs/require.js'], 
           dest: "build/release/" 
         }]
       }      
@@ -370,36 +371,23 @@ module.exports = function(grunt) {
 
     // require.js module loader
     requirejs: {
-      compile: {
+      options: {
+        mainConfigFile: "public/scripts/main.js",
+        wrap: false,
+        name: "main"
+      },
+      debug: {
         options: {
-          mainConfigFile: "public/scripts/config.js",
-          out: "build/debug/scripts/require.js",
-
-          // root application module
-          name: "config",
-
-          // do not wrap everything in an IIFE
-          wrap: false          
+          optimize: "none",
+          out: "build/debug/scripts/main.js"
         }
-      }
-    }
-
-    /*requirejs: {
-      // Include the main configuration file.
-      mainConfigFile: "app/config.js",
-
-      // Also include the JamJS configuration file.
-      jamConfig: "/vendor/jam/require.config.js",
-
-      // Output file.
-      out: "dist/debug/require.js",
-
-      // Root application module.
-      name: "config",
-
-      // Do not wrap everything in an IIFE.
-      wrap: false
-    },*/                
+      },
+      release: {
+        options: {
+          out: "build/release/scripts/main.min.js"
+        }
+      }      
+    }                
 
   });
 
@@ -408,13 +396,12 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
-  grunt.loadNpmTasks('grunt-contrib-jshint');
+  //grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-handlebars');
-  grunt.loadNpmTasks('grunt-contrib-jst');
   grunt.loadNpmTasks('grunt-contrib-connect');
-  grunt.loadNpmTasks('grunt-contrib-uglify');
+  //grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-mincss');
   grunt.loadNpmTasks('grunt-contrib-requirejs');
 
@@ -427,7 +414,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-reload');
 
   // define aliases for scripts/styles/templates tasks
-  grunt.registerTask('scripts', ['coffee', 'jshint']);
+  grunt.registerTask('scripts', ['coffee'/*, 'jshint'*/]);
   grunt.registerTask('styles', ['sass']);
   grunt.registerTask('templates', ['handlebars']);
 
@@ -435,8 +422,8 @@ module.exports = function(grunt) {
   grunt.registerTask('default', ['clean:dev', 'scripts', 'templates', 'styles']);
 
   // build tasks, dependent on "default" task
-  grunt.registerTask('build:debug', ['clean:debug', 'concat:scripts', 'concat:styles', 'targethtml:debug', 'copy:debug']);
-  grunt.registerTask('build:release', ['clean:release', 'uglify', 'mincss', 'targethtml:release', 'copy:release']);
+  grunt.registerTask('build:debug', ['clean:debug', 'requirejs:debug', 'concat:styles', 'targethtml:debug', 'copy:debug']);
+  grunt.registerTask('build:release', ['clean:release', 'requirejs:release', 'mincss', 'targethtml:release', 'copy:release']);
 
   // debug build + test
   grunt.registerTask('run:debug', ['default', 'build:debug', 'test:casperjs']);
