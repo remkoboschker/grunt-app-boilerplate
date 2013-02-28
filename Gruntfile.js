@@ -249,7 +249,7 @@ module.exports = function(grunt) {
         files: [{ 
           expand: true, 
           cwd: 'public/', 
-          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess', 'vendor/requirejs/require.js'], 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "build/debug/" 
         }]
       },
@@ -257,7 +257,7 @@ module.exports = function(grunt) {
         files: [{ 
           expand: true, 
           cwd: 'public/', 
-          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess', 'vendor/requirejs/require.js'], 
+          src: ['*.png', '*.txt', '*.xml', '*.ico', '404.html', '.htaccess'], 
           dest: "build/release/" 
         }]
       }      
@@ -373,8 +373,8 @@ module.exports = function(grunt) {
     requirejs: {
       options: {
         mainConfigFile: "public/scripts/main.js",
-        wrap: false,
-        name: "main"
+        include: ['../vendor/requirejs/require'],
+        name: "main",
       },
       debug: {
         options: {
