@@ -1,11 +1,11 @@
-class Module_Hello
-	constructor: (@name) ->
-		@name = 'world' unless name?
+define (require) ->
 
-	setName: (name) ->
-		@name = name
+  class HelloModule
+    constructor: (@name) ->
+      @name = 'world' unless name?
 
-	getName: ->
-		@name
+    setName: (name) ->
+      @name = name
 
-window['Module_Hello'] = Module_Hello
+    getName: ->
+      @name

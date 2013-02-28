@@ -1,24 +1,24 @@
-var Module_Hello;
 
-Module_Hello = (function() {
+define(function(require) {
+  var HelloModule;
+  return HelloModule = (function() {
 
-  function Module_Hello(name) {
-    this.name = name;
-    if (name == null) {
-      this.name = 'world';
+    function HelloModule(name) {
+      this.name = name;
+      if (name == null) {
+        this.name = 'world';
+      }
     }
-  }
 
-  Module_Hello.prototype.setName = function(name) {
-    return this.name = name;
-  };
+    HelloModule.prototype.setName = function(name) {
+      return this.name = name;
+    };
 
-  Module_Hello.prototype.getName = function() {
-    return this.name;
-  };
+    HelloModule.prototype.getName = function() {
+      return this.name;
+    };
 
-  return Module_Hello;
+    return HelloModule;
 
-})();
-
-window['Module_Hello'] = Module_Hello;
+  })();
+});

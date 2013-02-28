@@ -1,13 +1,7 @@
-require ['jquery', 'handlebars'], ($, Handlebars) ->
-	
-	render = (template_name, data) ->
-	    if (typeof window["app"] isnt "undefined") and (typeof window["app"]["templates"] isnt "undefined") and (typeof window["app"]["templates"][template_name] is "function")
-	        window["app"]["templates"][template_name] data
-	    else
-	        throw new Error "Template not found: " + template_name
+define ['$', 'HelloModule', 'HelloTemplate', 'AppLayout'], ($, HelloModule, HelloTemplate, AppLayout) ->
 
-	module_hello = new window['Module_Hello']()
-	content = render 'modules/hello', {name: module_hello.getName()}
-
-	$ ->
-		$('#main').append(render 'layout', {content: content})
+  class App 
+    constructor: ->
+      hello = new HelloModule()
+      content = HelloTemplate {name: hello.getName()}
+      $('#main').append(AppLayout {content: content})

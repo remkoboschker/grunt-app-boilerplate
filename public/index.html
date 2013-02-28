@@ -34,20 +34,18 @@
 
         <!-- Application source. -->
 
-        <!--(if target dummy)><!-->       
-        <script data-main="/app/config" src="vendor/requirejs/require.js"></script>
+        <!--(if target dummy)><!-->   
+        <script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
         <script>__reloadServerUrl="ws://localhost:8001";</script>
         <script type="text/javascript" src="//localhost:8001/__reload/client.js"></script>
         <!--<!(endif)-->
 
         <!--(if target debug)>
-        <script src="/scripts/vendor.js"></script>
-        <script src="/scripts/main.js"></script>
+        <script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
         <!(endif)-->
 
         <!--(if target release)>
-        <script src="/scripts/vendor.min.js"></script>
-        <script src="/scripts/main.min.js"></script>
+        <script data-main="/scripts/main.min" src="/vendor/requirejs/require.js"></script>
         <!(endif)-->        
     </body>
 </html>
