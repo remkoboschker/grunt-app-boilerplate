@@ -412,6 +412,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-bump');
   grunt.loadNpmTasks('grunt-open');
   grunt.loadNpmTasks('grunt-reload');
+  grunt.loadNpmTasks('grunt-devtools');
 
   // define aliases for scripts/styles/templates tasks
   grunt.registerTask('scripts', ['coffee'/*, 'jshint'*/]);
