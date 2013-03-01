@@ -25,6 +25,7 @@
     "grunt-bump": "latest",
     "grunt-open": "latest",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-devtools": "latest"
+    "grunt-devtools": "latest",
+    "mocha-phantomjs": "latest"
   }
 }

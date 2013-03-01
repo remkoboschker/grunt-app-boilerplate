@@ -1,0 +1,17 @@
+define ["../../app/modules/hello/scripts/hello"], (HelloModule) ->
+    
+  describe "Hello Module", ->
+    
+    beforeEach ->
+      @hello = new HelloModule()
+
+    afterEach ->
+      delete @hello
+
+    it "should return given name", ->
+      name = "Andrew"
+      @hello.setName name
+      expect(@hello.getName()).to.eql name
+
+
+

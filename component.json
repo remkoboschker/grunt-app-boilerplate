@@ -5,6 +5,8 @@
     "jquery": "~1.9.1",
     "handlebars": "~1.0.0-rc.2",
     "normalize-css": "~2.1.0",
-    "requirejs": "~2.1.4"
+    "requirejs": "~2.1.4",
+    "mocha": "~1.8.1",
+    "chai": "~1.5.0"
   }
 }

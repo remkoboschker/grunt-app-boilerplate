@@ -125,6 +125,14 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
+      tests_mocha:
+        files: [
+          expand: true
+          cwd: "tests/mocha/src/"
+          src: ["{runner,spec}/**/*.coffee"]
+          dest: "tests/mocha/build/"
+          ext: ".js"
+        ]
     
     #compile SASS files into CSS
     sass:
@@ -209,7 +217,7 @@ module.exports = (grunt) ->
       dev: ["public/{scripts,styles,templates}/"]
       debug: ["build/debug/"]
       release: ["build/release/"]
-
+      tests_mocha: ["tests/mocha/build/"]
     
     # copy additional files (ex. icons, robots.txt) into "build" folder
     copy:
@@ -281,7 +289,7 @@ module.exports = (grunt) ->
           # 'bridge.js'. If you include `mocha.run()` in your html spec, you
           # must wrap it in a conditional check to not run if it is opened
           # in PhantomJS
-          run: true
+          run: false
 
       remote:
         options:
@@ -294,7 +302,7 @@ module.exports = (grunt) ->
           urls: ["http://localhost:" + "<%= connect.mocha.options.port %>" + "/index.html"]
           
           # Indicates whether 'mocha.run()' should be executed in 'bridge.js'
-          run: true
+          run: false
 
     
     # open page in browser when http server starts
@@ -365,7 +373,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-devtools"
   
   # define aliases for scripts/styles/templates tasks
-  grunt.registerTask "scripts", ["coffee"] #, 'jshint'
+  grunt.registerTask "scripts", ["coffee:dev"] #, 'jshint'
   grunt.registerTask "styles", ["sass"]
   grunt.registerTask "templates", ["handlebars"]
   
@@ -377,7 +385,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build:release", ["clean:release", "requirejs:release", "mincss", "targethtml:release", "copy:release"]
   
   # debug build + test
-  grunt.registerTask "run:debug", ["default", "build:debug", "test:casperjs"]
+  grunt.registerTask "run:debug", ["default", "build:debug", "test:mocha", "test:casperjs"]
   
   # release build + server
   grunt.registerTask "run:full", ["run:debug", "build:release", "server:release"]
@@ -392,6 +400,7 @@ module.exports = (grunt) ->
   grunt.registerTask "test:casperjs", ["connect:debug", "casperjs"]
   
   # Mocha tests
+  grunt.registerTask "test:mocha:rebuild", ["clean:tests_mocha", "coffee:tests_mocha"]
   grunt.registerTask "test:mocha:local", ["mocha:local"]
   grunt.registerTask "test:mocha:remote", ["connect:mocha", "mocha:remote"]
-  grunt.registerTask "test:mocha", ["test:mocha:local", "test:mocha:remote"]
+  grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local", "test:mocha:remote"]
