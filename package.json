@@ -24,6 +24,7 @@
     "connect-modrewrite": "latest",
     "grunt-bump": "latest",
     "grunt-open": "latest",
-    "grunt-reload": "git://github.com/webxl/grunt-reload.git"
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git",
+    "grunt-devtools": "~0.1.0-4"
   }
 }
