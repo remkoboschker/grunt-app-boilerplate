@@ -3,7 +3,7 @@ require.config
     paths: {
         $ : '../vendor/jquery/jquery',
         handlebars  : '../vendor/handlebars/handlebars',
-        text : '../vendor/require/plugins/text',
+        #text : '../vendor/require/plugins/text',
 
         App: 'app',
         AppLayout: '../templates/layout',

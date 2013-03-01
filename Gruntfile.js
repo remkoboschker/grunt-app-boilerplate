@@ -125,7 +125,7 @@ module.exports = function(grunt) {
 
       // dummy task for keeping server connection alive
       dummy: {
-        files: [],
+        files: ['README.md'],
         tasks: []
       }            
     },    
