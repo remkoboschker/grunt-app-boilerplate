@@ -2,11 +2,9 @@ language: node_js
 node_js:
   - 0.8
 before_script:
-  - npm install grunt-cli
-  - npm install bower
   - export PATH=$PATH:`pwd`/node_modules/.bin
   - bower install
   - gem install sass
-script:
-  - grunt
-  - grunt test:mocha --debug
+# script:
+#   - grunt
+#   - grunt test:mocha --debug

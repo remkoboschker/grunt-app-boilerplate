@@ -9,6 +9,8 @@
   },
   "devDependencies": {
     "grunt": "*",
+    "grunt-cli": "*",
+    "bower": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-sass": "*",
