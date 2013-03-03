@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/abahdanovich/grunt-app-boilerplate.png?branch=master)](https://travis-ci.org/abahdanovich/grunt-app-boilerplate)
+
 Requirements
 ============
 
