@@ -370,7 +370,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-bump"
   grunt.loadNpmTasks "grunt-open"
   grunt.loadNpmTasks "grunt-reload"
-  grunt.loadNpmTasks "grunt-devtools"
+  #grunt.loadNpmTasks "grunt-devtools"
   
   # define aliases for scripts/styles/templates tasks
   grunt.registerTask "scripts", ["coffee:dev"] #, 'jshint'
@@ -403,4 +403,6 @@ module.exports = (grunt) ->
   grunt.registerTask "test:mocha:rebuild", ["clean:tests_mocha", "coffee:tests_mocha"]
   grunt.registerTask "test:mocha:local", ["mocha:local"]
   grunt.registerTask "test:mocha:remote", ["connect:mocha", "mocha:remote"]
-  grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local", "test:mocha:remote"]
+  grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local"]
+
+  grunt.registerTask "test", ["test:mocha", "test:casperjs"]
