@@ -2,6 +2,6 @@ define ['$', 'HelloModule', 'HelloTemplate', 'AppLayout'], ($, HelloModule, Hell
 
   class App 
     constructor: ->
-      hello = new HelloModule('Worrrld')
-      content = HelloTemplate {name: hello.getName()}
+      hello = new HelloModule()
+      content = HelloTemplate {greeting: hello.getAll()}
       $('#main').append(AppLayout {content: content})
