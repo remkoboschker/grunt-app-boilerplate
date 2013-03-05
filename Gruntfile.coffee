@@ -319,6 +319,9 @@ module.exports = (grunt) ->
       test:
         path: "http://localhost:9004"
 
+      doc:
+        path: "./doc/codo/index.html"
+
     
     # reload page when files change
     reload:
@@ -346,7 +349,49 @@ module.exports = (grunt) ->
         options:
           out: "build/release/scripts/main.min.js"
 
-  
+    # code documentation (codo) configuration
+    codo:
+      source_files: ['./app/']
+      extra_files: ['TODO.md']
+      options:
+        ###
+        available options:
+          readme      The readme file used                                [default: "README.md"]
+          name        The project name used                               [default: "Codo"]
+          quiet       Show no warnings                                    [boolean]  [default: false]
+          output-dir  The output directory                                [default: "./doc"]
+          analytics   The Google analytics ID                             [default: false]
+          verbose     Show parsing errors                                 [boolean]  [default: false]
+          debug       Show stacktraces and converted CoffeeScript source  [boolean]  [default: false]
+          help        Show the help
+          cautious    Don't attempt to parse singleline comments          [boolean]  [default: false]
+          server      Start a documentation server
+          private     Show private methods                                [boolean]  [default: true]
+          title                                                           [default: "CoffeeScript API Documentation"]  
+        ###
+        name: '<%= pkg.name %>'
+        "output-dir": "./doc/codo/"
+        private: true
+        title: "<%= pkg.name %> project api documentation"
+        verbose: true
+        debug: true
+
+    # exec "codo" documentation generator with options specified in "codo" config section
+    exec:
+      codo:
+        cmd: ->
+          cmds = ["codo"]
+          config = @config.get('codo')
+
+          Object.keys(config.options).forEach (opt) ->
+            cmds.push "--" + opt + " " + config.options[opt]
+
+          cmds.push config.source_files.join(',')
+          cmds.push ' - '
+          cmds.push config.extra_files.join(',')
+
+          cmds.join(" ")
+
   # "official" tasks
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
@@ -371,6 +416,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-open"
   grunt.loadNpmTasks "grunt-reload"
   #grunt.loadNpmTasks "grunt-devtools"
+  grunt.loadNpmTasks 'grunt-exec'
   
   # define aliases for scripts/styles/templates tasks
   grunt.registerTask "scripts", ["coffee:dev"] #, 'jshint'
@@ -405,4 +451,9 @@ module.exports = (grunt) ->
   grunt.registerTask "test:mocha:remote", ["connect:mocha", "mocha:remote"]
   grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local"]
 
+  # all tests
   grunt.registerTask "test", ["test:mocha", "test:casperjs"]
+
+  # documentation
+  grunt.registerTask "codo", ["exec:codo"]
+  grunt.registerTask "doc", ["codo", 'open:doc']

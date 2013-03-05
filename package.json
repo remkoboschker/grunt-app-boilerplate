@@ -29,6 +29,7 @@
     "connect-modrewrite": "*",
     "grunt-bump": "*",
     "grunt-open": "*",
-    "grunt-reload": "git://github.com/webxl/grunt-reload.git"
+    "grunt-reload": "git://github.com/webxl/grunt-reload.git",
+    "grunt-exec": "latest"
   }
 }

@@ -23,11 +23,13 @@ Under the hood, following projects are used:
 Set up
 ======
 
-Install required NPM packages (grunt runner + bower package manager):
+Install required NPM packages (grunt runner + bower package manager + documentation generating tool):
 
 ```
 npm install -g grunt-cli
 npm install -g bower
+npm install -g codo
+
 ```
 
 From application folder, run:
@@ -54,6 +56,11 @@ __Note__: at the moment "build" tasks should be run after "default" build task. 
 
 There is no dependency defined as it makes no sense to repeat "build:debug" when no files were modifies since last test run.
 
+Documentation
+=============
+
+Coffeescript api documentation is generated with `codo` tool. You should make code annotations according to specification on tool's home page: https://github.com/netzpirat/codo/
+
 Folders structure
 =================
 
@@ -61,8 +68,9 @@ Folders structure
 * build - distribution files
 	* debug - files concatenated
 	* release - files concatemated and minified
+* doc - documentation
 * node_modules - node modules
-* tests - unit and integrational tests
-	* casperjs - integrational tests
-	* mocha - unit tests
 * public - development www root
+* tests - unit and integrational tests
+    * casperjs - integrational tests
+    * mocha - unit tests
