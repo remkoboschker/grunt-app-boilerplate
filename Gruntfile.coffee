@@ -337,8 +337,8 @@ module.exports = (grunt) ->
     requirejs:
       options:
         mainConfigFile: "public/scripts/main.js"
-        include: ["../vendor/requirejs/require"]
-        name: "main"
+        include: ["vendor/requirejs/require"]
+        name: "scripts/main"
 
       debug:
         options:

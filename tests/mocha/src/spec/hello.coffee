@@ -1,4 +1,4 @@
-define ["../../app/modules/hello/scripts/hello"], (HelloModule) ->
+define ["app/modules/hello/scripts/hello"], (HelloModule) ->
     
   describe "Hello Module", ->
     

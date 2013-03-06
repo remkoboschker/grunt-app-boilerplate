@@ -1,4 +1,4 @@
-require ["../../app/vendor/chai/chai"], (chai) ->
+require ["app/vendor/chai/chai"], (chai) ->
   
   # This will be overridden by mocha-helper if you run with grunt
   mocha.setup "bdd"
@@ -8,7 +8,7 @@ require ["../../app/vendor/chai/chai"], (chai) ->
   window.should = chai.should
   window.expect = chai.expect
 
-  require ["../spec/hello"], ->
+  require ["build/spec/hello"], ->
     
     if window.mochaPhantomJS
       mochaPhantomJS.run()
