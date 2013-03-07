@@ -392,6 +392,10 @@ module.exports = (grunt) ->
 
           cmds.join(" ")
 
+      selenium:
+        cmd: (browser) ->
+          "BROWSER_NAME=#{browser} mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/"
+
   # "official" tasks
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
@@ -451,9 +455,15 @@ module.exports = (grunt) ->
   grunt.registerTask "test:mocha:remote", ["connect:mocha", "mocha:remote"]
   grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local"]
 
+  # Selenium tests
+  grunt.registerTask "test:selenium:chrome", ["exec:selenium:chrome"]
+  grunt.registerTask "test:selenium:firefox", ["exec:selenium:firefox"]
+  grunt.registerTask "test:selenium:all", ["test:selenium:chrome", "test:selenium:firefox"]
+
   # all tests
   grunt.registerTask "test", ["test:mocha", "test:casperjs"]
 
   # documentation
   grunt.registerTask "codo", ["exec:codo"]
   grunt.registerTask "doc", ["codo", 'open:doc']
+

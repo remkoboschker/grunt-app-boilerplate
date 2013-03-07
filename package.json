@@ -1,6 +1,6 @@
 {
   "name": "grunt-app-boilerplate",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "author": "Andrei Bahdanovich <bahdanovich@gmail.com>",
   "homepage": "https://github.com/abahdanovich/grunt-app-boilerplate",
   "license": "MIT",
@@ -30,6 +30,7 @@
     "grunt-bump": "*",
     "grunt-open": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-exec": "latest"
+    "grunt-exec": "latest",
+    "selenium-webdriver": "latest"
   }
 }

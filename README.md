@@ -29,6 +29,7 @@ Install required NPM packages (grunt runner + bower package manager + documentat
 npm install -g grunt-cli
 npm install -g bower
 npm install -g codo
+npm install -g mocha
 
 ```
 
