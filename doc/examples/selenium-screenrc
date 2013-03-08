@@ -1,0 +1,13 @@
+hardstatus alwayslastline
+hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR} (%{W}%n*%f %t%?(%u)%?%{=b kR})%{= kw}%?%+Lw%?%?%= %{g}][%{Y}%l%{g}] %{=b C}[ %m/%d %c ]%{W}'
+
+startup_message off
+
+screen -t window0 bash
+screen -t window1 bash
+select window0
+split
+focus down
+select window1
+exec bash -c "DISPLAY=:99 java -jar $HOME/selenium-server-standalone.jar"
+focus up

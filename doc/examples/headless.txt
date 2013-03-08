@@ -1,0 +1,3 @@
+#sudo apt-get install xvfb x11-xkb-utils xfonts-100dpi xfonts-75dpi xfonts-scalable xfonts-cyrillic xserver-xorg-core
+Xvfb -fp /usr/share/fonts/X11/misc/ :99 
+DISPLAY=:99 java -jar selenium-server-standalone.jar
