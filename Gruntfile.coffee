@@ -322,6 +322,8 @@ module.exports = (grunt) ->
       doc:
         path: "./doc/codo/index.html"
 
+      doc_selenium:
+        path: "./doc/selenium-webdriver/index.html"
     
     # reload page when files change
     reload:
@@ -466,4 +468,5 @@ module.exports = (grunt) ->
   # documentation
   grunt.registerTask "codo", ["exec:codo"]
   grunt.registerTask "doc", ["codo", 'open:doc']
+  grunt.registerTask "doc:selenium", ['open:doc_selenium']
 

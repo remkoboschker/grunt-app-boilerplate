@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: events.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: events.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>// Copyright 2011 Software Freedom Conservancy. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview A light weight event system modeled after Node's EventEmitter.
+ */
+
+goog.provide('webdriver.EventEmitter');
+
+
+
+/**
+ * Object that can emit events for others to listen for. This is used instead
+ * of Closure's event system because it is much more light weight. The API is
+ * based on Node's EventEmitters.
+ * @constructor
+ */
+webdriver.EventEmitter = function() {
+  /**
+   * Map of events to registered listeners.
+   * @type {!Object.&lt;!Array.&lt;{fn: !Function, oneshot: boolean,
+   *                          scope: (Object|undefined)}>>}
+   * @private
+   */
+  this.events_ = {};
+};
+
+
+/**
+ * Fires an event and calls all listeners.
+ * @param {string} type The type of event to emit.
+ * @param {...*} var_args Any arguments to pass to each listener.
+ */
+webdriver.EventEmitter.prototype.emit = function(type, var_args) {
+  var args = Array.prototype.slice.call(arguments, 1);
+  var listeners = this.events_[type];
+  if (!listeners) {
+    return;
+  }
+  for (var i = 0; i &lt; listeners.length;) {
+    var listener = listeners[i];
+    listener.fn.apply(listener.scope, args);
+    if (listeners[i] === listener) {
+      if (listeners[i].oneshot) {
+        listeners.splice(i, 1);
+      } else {
+        i += 1;
+      }
+    }
+  }
+};
+
+
+/**
+ * Returns a mutable list of listeners for a specific type of event.
+ * @param {string} type The type of event to retrieve the listeners for.
+ * @return {!Array.&lt;{fn: !Function, oneshot: boolean,
+ *                   scope: (Object|undefined)}>} The registered listeners for
+ *     the given event type.
+ */
+webdriver.EventEmitter.prototype.listeners = function(type) {
+  var listeners = this.events_[type];
+  if (!listeners) {
+    listeners = this.events_[type] = [];
+  }
+  return listeners;
+};
+
+
+/**
+ * Registers a listener.
+ * @param {string} type The type of event to listen for.
+ * @param {!Function} listenerFn The function to invoke when the event is fired.
+ * @param {Object=} opt_scope The object in whose scope to invoke the listener.
+ * @param {boolean=} opt_oneshot Whether the listener should be removed after
+ *    the first event is fired.
+ * @return {!webdriver.EventEmitter} A self reference.
+ * @private
+ */
+webdriver.EventEmitter.prototype.addListener_ = function(type, listenerFn,
+    opt_scope, opt_oneshot) {
+  var listeners = this.listeners(type);
+  var n = listeners.length;
+  for (var i = 0; i &lt; n; ++i) {
+    if (listeners[i].fn == listenerFn) {
+      return this;
+    }
+  }
+
+  listeners.push({
+    fn: listenerFn,
+    scope: opt_scope,
+    oneshot: !!opt_oneshot
+  });
+  return this;
+};
+
+
+/**
+ * Registers a listener.
+ * @param {string} type The type of event to listen for.
+ * @param {!Function} listenerFn The function to invoke when the event is fired.
+ * @param {Object=} opt_scope The object in whose scope to invoke the listener.
+ * @return {!webdriver.EventEmitter} A self reference.
+ */
+webdriver.EventEmitter.prototype.addListener = function(type, listenerFn,
+    opt_scope) {
+  return this.addListener_(type, listenerFn, opt_scope);
+};
+
+
+/**
+ * Registers a one-time listener which will be called only the first time an
+ * event is emitted, after which it will be removed.
+ * @param {string} type The type of event to listen for.
+ * @param {!Function} listenerFn The function to invoke when the event is fired.
+ * @param {Object=} opt_scope The object in whose scope to invoke the listener.
+ * @return {!webdriver.EventEmitter} A self reference.
+ */
+webdriver.EventEmitter.prototype.once = function(type, listenerFn, opt_scope) {
+  return this.addListener_(type, listenerFn, opt_scope, true);
+};
+
+
+/**
+ * An alias for {@linkcode #addListener()}.
+ * @param {string} type The type of event to listen for.
+ * @param {!Function} listenerFn The function to invoke when the event is fired.
+ * @param {Object=} opt_scope The object in whose scope to invoke the listener.
+ * @return {!webdriver.EventEmitter} A self reference.
+ */
+webdriver.EventEmitter.prototype.on =
+    webdriver.EventEmitter.prototype.addListener;
+
+
+/**
+ * Removes a previously registered event listener.
+ * @param {string} type The type of event to unregister.
+ * @param {!Function} listenerFn The handler function to remove.
+ * @return {!webdriver.EventEmitter} A self reference.
+ */
+webdriver.EventEmitter.prototype.removeListener = function(type, listenerFn) {
+  var listeners = this.events_[type];
+  if (listeners) {
+    var n = listeners.length;
+    for (var i = 0; i &lt; n; ++i) {
+      if (listeners[i].fn == listenerFn) {
+        listeners.splice(i, 1);
+        return this;
+      }
+    }
+  }
+  return this;
+};
+
+
+/**
+ * Removes all listeners for a specific type of event. If no event is
+ * specified, all listeners across all types will be removed.
+ * @param {string=} opt_type The type of event to remove listeners from.
+ * @return {!webdriver.EventEmitter} A self reference.
+ */
+webdriver.EventEmitter.prototype.removeAllListeners = function(opt_type) {
+  goog.isDef(opt_type) ? delete this.events_[opt_type] : this.events_ = {};
+  return this;
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:40 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

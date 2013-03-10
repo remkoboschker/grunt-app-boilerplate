@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: locators.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: locators.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>// Copyright 2011 Software Freedom Conservancy. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview Factory methods for the supported locator strategies.
+ */
+
+goog.provide('webdriver.Locator');
+goog.provide('webdriver.Locator.Strategy');
+
+goog.require('bot.json');
+goog.require('goog.object');
+
+
+
+/**
+ * An element locator.
+ * @param {string} using The type of strategy to use for this locator.
+ * @param {string} value The search target of this locator.
+ * @constructor
+ */
+webdriver.Locator = function(using, value) {
+
+  /**
+   * The search strategy to use when searching for an element.
+   * @type {string}
+   */
+  this.using = using;
+
+  /**u
+   * The search target for this locator.
+   * @type {string}
+   */
+  this.value = value;
+};
+
+
+/**
+ * Creates a factory function for a {@linkcode webdriver.Locator}.
+ * @param {string} type The type of locator for the factory.
+ * @return {function(string):!webdriver.Locator} The new factory function.
+ * @private
+ */
+webdriver.Locator.factory_ = function(type) {
+  return function(value) {
+    return new webdriver.Locator(type, value);
+  };
+};
+
+
+/**
+ * Factory methods for the supported locator strategies.
+ * @type {Object.&lt;function(string):!webdriver.Locator>}
+ */
+webdriver.Locator.Strategy = {
+  'className': webdriver.Locator.factory_('class name'),
+  'class name': webdriver.Locator.factory_('class name'),
+  'css': webdriver.Locator.factory_('css selector'),
+  'id': webdriver.Locator.factory_('id'),
+  'js': webdriver.Locator.factory_('js'),
+  'linkText': webdriver.Locator.factory_('link text'),
+  'link text': webdriver.Locator.factory_('link text'),
+  'name': webdriver.Locator.factory_('name'),
+  'partialLinkText': webdriver.Locator.factory_('partial link text'),
+  'partial link text': webdriver.Locator.factory_('partial link text'),
+  'tagName': webdriver.Locator.factory_('tag name'),
+  'tag name': webdriver.Locator.factory_('tag name'),
+  'xpath': webdriver.Locator.factory_('xpath')
+};
+goog.exportSymbol('By', webdriver.Locator.Strategy);
+
+
+/**
+ * Creates a new Locator from an object whose only property is also a key in
+ * the {@linkcode webdriver.Locator.Strategy} map.
+ * @param {Object.&lt;string>} obj The object to convert into a locator.
+ * @return {webdriver.Locator} The new locator object.
+ */
+webdriver.Locator.createFromObj = function(obj) {
+  var key = goog.object.getAnyKey(obj);
+  if (!key) {
+    throw Error('No keys found in locator hash object');
+  } else if (key in webdriver.Locator.Strategy) {
+    return webdriver.Locator.Strategy[key](obj[key]);
+  }
+  throw Error('Unsupported locator strategy: ' + key);
+};
+
+
+/**
+ * Verifies that a {@linkcode locator} is a valid locator to use for searching for
+ * elements on the page.
+ * @param {webdriver.Locator|Object.&lt;string>} locator The locator
+ *     to verify, or a short-hand object that can be converted into a locator
+ *     to verify.
+ * @return {!webdriver.Locator} The validated locator.
+ */
+webdriver.Locator.checkLocator = function(locator) {
+  if (!locator.using || !locator.value) {
+    locator = webdriver.Locator.createFromObj(locator);
+  }
+  return (/**@type {!webdriver.Locator} */locator);
+};
+
+
+/** @return {string} String representation of this locator. */
+webdriver.Locator.prototype.toString = function() {
+  return 'By.' + this.using.replace(/ ([a-z])/g, function(all, match) {
+    return match.toUpperCase();
+  }) + '(' + bot.json.stringify(this.value) + ')';
+};
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:40 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

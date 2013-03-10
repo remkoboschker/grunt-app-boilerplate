@@ -1,0 +1,2245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: Frame_</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Class: Frame_</h1>
+    
+    
+
+
+
+<section>
+    
+<header>
+    <h2>
+    Frame_
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <h4 class="name" id="Frame_"><span class="type-signature">&lt;private> </span>new Frame_<span class="signature">(flow)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        An execution frame within a <a href="webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a>.  Each
+frame represents the execution context for either a
+<a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a> or a callback on a
+<a href="webdriver.promise.Deferred.html">webdriver.promise.Deferred</a>.
+
+<p>Each frame may contain sub-frames.  If child N is a sub-frame, then the
+items queued within it are given priority over child N+1.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>flow</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.promise.ControlFlow.html">webdriver.promise.ControlFlow</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The flow this instance belongs
+    to.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1683
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+        <h3 class="subsection-title">Extends</h3>
+        
+        <ul>
+            <li><a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></li>
+        </ul>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="children_"><span class="type-signature">&lt;private> </span>children_<span class="type-signature"> :Array.&lt;!(webdriver.promise.Frame_|webdriver.promise.Task_)></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1690
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isActive_"><span class="type-signature">&lt;private> </span>isActive_<span class="type-signature"> :boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Whether this frame is active. A frame is considered active once one of its
+descendants has been removed for execution.
+
+Adding a sub-frame as a child to an active frame is an indication that
+a callback to a <a href="webdriver.promise.Deferred.html">webdriver.promise.Deferred</a> is being invoked and any
+tasks scheduled within it should have priority over previously scheduled
+tasks:
+<code><pre>
+  var flow = webdriver.promise.controlFlow();
+  flow.execute('start here', goog.nullFunction).then(function() {
+    flow.execute('this should execute 2nd', goog.nullFunction);
+  });
+  flow.execute('this should execute last', goog.nullFunction);
+</pre></code>
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1722
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="isLocked_"><span class="type-signature">&lt;private> </span>isLocked_<span class="type-signature"> :boolean</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        Whether this frame is currently locked. A locked frame represents a callback
+or task function which has run to completion and scheduled all of its tasks.
+
+<p>Once a frame becomes active, any new frames which are
+added represent callbacks on a <a href="webdriver.promise.Deferred.html">webdriver.promise.Deferred</a>, whose
+tasks must be given priority over previously scheduled tasks.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1736
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="lastInsertedChild_"><span class="type-signature">&lt;private> </span>lastInsertedChild_<span class="type-signature"> :<a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        A reference to the last node inserted in this frame.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1744
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="parent_"><span class="type-signature">&lt;private> </span>parent_<span class="type-signature"> :<a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        This node's parent.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#parent_">webdriver.promise.Node_#parent_</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1638
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="pendingTask_"><span class="type-signature">&lt;private> </span>pendingTask_<span class="type-signature"> :<a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    <div class="description">
+        The task currently being executed within this frame.
+    </div>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1700
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="addBoth"><span class="type-signature"></span>addBoth<span class="signature">(callback, <span class="optional">opt_self</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Registers a function to be invoked when this promise is either rejected or
+resolved. This function is provided for backwards compatibility with the
+Dojo Deferred API.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The function to call when this promise is
+    either resolved or rejected. The function should expect a single
+    argument: the resolved value or rejection error.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_self</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The object which |this| should refer to when the
+    function is invoked.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#addBoth">webdriver.promise.Node_#addBoth</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 163
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new promise which will be resolved
+    with the result of the invoked callback.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addCallback"><span class="type-signature"></span>addCallback<span class="signature">(callback, <span class="optional">opt_self</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Registers a function to be invoked when this promise is successfully
+resolved. This function is provided for backwards compatibility with the
+Dojo Deferred API.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The function to call if this promise is
+    successfully resolved. The function should expect a single argument: the
+    promise's resolved value.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_self</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The object which |this| should refer to when the
+    function is invoked.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#addCallback">webdriver.promise.Node_#addCallback</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 127
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new promise which will be resolved
+    with the result of the invoked callback.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addCallbacks"><span class="type-signature"></span>addCallbacks<span class="signature">(callback, errback, <span class="optional">opt_self</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        An alias for webdriver.promise.Promise.prototype.then that permits
+the scope of the invoked function to be specified. This function is provided
+for backwards compatibility with the Dojo Deferred API.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>callback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The function to call if this promise is
+    successfully resolved. The function should expect a single argument: the
+    promise's resolved value.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>errback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The function to call if this promise is
+    rejected. The function should expect a single argument: the
+    Error that caused the promise to be rejected.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_self</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The object which |this| should refer to when the
+    function is invoked.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#addCallbacks">webdriver.promise.Node_#addCallbacks</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 185
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new promise which will be resolved
+    with the result of the invoked callback.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addChild"><span class="type-signature"></span>addChild<span class="signature">(node)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Adds a new node to this frame.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>node</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.promise.Frame_.html">webdriver.promise.Frame_</a></span>
+|
+
+<span class="param-type"><a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The node to insert.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1776
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="addErrback"><span class="type-signature"></span>addErrback<span class="signature">(errback, <span class="optional">opt_self</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Registers a function to be invoked when this promise is rejected.
+This function is provided for backwards compatibility with the
+Dojo Deferred API.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>errback</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Function</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The function to call if this promise is
+    rejected. The function should expect a single argument: the
+    Error that caused the promise to be rejected.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_self</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The object which |this| should refer to when the
+    function is invoked.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#addErrback">webdriver.promise.Node_#addErrback</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 145
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A new promise which will be resolved
+    with the result of the invoked callback.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getFirstChild"><span class="type-signature"></span>getFirstChild<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Frame_.html">webdriver.promise.Frame_</a>|<a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1806
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    This frame's
+    fist child.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Frame_.html">webdriver.promise.Frame_</a></span>
+|
+
+<span class="param-type"><a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getParent"><span class="type-signature"></span>getParent<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#getParent">webdriver.promise.Node_#getParent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1642
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    This node's parent.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getPendingTask"><span class="type-signature"></span>getPendingTask<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1751
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The task currently executing
+    within this frame, if any.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="getRoot"><span class="type-signature"></span>getRoot<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#getRoot">webdriver.promise.Node_#getRoot</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1658
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    The root of this node's tree.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="lockFrame"><span class="type-signature"></span>lockFrame<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Locks this frame.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1766
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="removeChild"><span class="type-signature"></span>removeChild<span class="signature">(child)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Removes a child from this frame.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>child</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.promise.Frame_.html">webdriver.promise.Frame_</a></span>
+|
+
+<span class="param-type"><a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The child to remove.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1818
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setParent"><span class="type-signature"></span>setParent<span class="signature">(parent)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>parent</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.promise.Node_.html">webdriver.promise.Node_</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">This node's new parent.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    <dt class="inherited-from">Inherited From:</dt>
+    <dd class="inherited-from"><ul class="dummy"><li>
+        <a href="webdriver.promise.Node_.html#setParent">webdriver.promise.Node_#setParent</a>
+    </li></dd>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1650
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="setPendingTask"><span class="type-signature"></span>setPendingTask<span class="signature">(task)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>task</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.promise.Task_.html">webdriver.promise.Task_</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The task currently
+    executing within this frame, if any.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1760
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">()</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="promise.js.html">promise.js</a>, line 1829
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:57 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

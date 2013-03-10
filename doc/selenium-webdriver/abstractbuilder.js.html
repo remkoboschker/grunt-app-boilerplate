@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: abstractbuilder.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: abstractbuilder.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>// Copyright 2012 Software Freedom Conservancy. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+goog.provide('webdriver.AbstractBuilder');
+
+goog.require('webdriver.process');
+
+
+
+/**
+ * Creates new {@linkcode webdriver.WebDriver} clients.  Upon instantiation, each
+ * Builder will configure itself based on the following environment variables:
+ * &lt;dl>
+ *   &lt;dt>{@linkcode webdriver.AbstractBuilder.SERVER_URL_ENV}&lt;/dt>
+ *   &lt;dd>Defines the remote WebDriver server that should be used for command
+ *       command execution; may be overridden using
+ *       {@linkcode webdriver.AbstractBuilder.prototype.usingServer}.&lt;/dd>
+ *   &lt;dt>{@linkcode webdriver.AbstractBuilder.SESSION_ID_ENV}&lt;/dt>
+ *   &lt;dd>Defines the ID of an existing WebDriver session that should be used
+ *       for new clients. This is most often used for browser-based clients
+ *       that wish to gain control of the current browser which is already under
+ *       WebDriver's control.&lt;/dd>
+ * &lt;/dl>
+ * @constructor
+ */
+webdriver.AbstractBuilder = function() {
+
+  /**
+   * URL of the remote server to use for new clients; initialized from the
+   * value of the {@link webdriver.AbstractBuilder.SERVER_URL_ENV} environment
+   * variable, but may be overridden using
+   * {@link webdriver.AbstractBuilder#usingServer}.
+   * @type {string}
+   * @private
+   */
+  this.serverUrl_ = webdriver.process.getEnv(
+      webdriver.AbstractBuilder.SERVER_URL_ENV,
+      webdriver.AbstractBuilder.DEFAULT_SERVER_URL);
+
+  /**
+   * ID of an existing WebDriver session that new clients should use.
+   * Initialized from the value of the
+   * {@link webdriver.AbstractBuilder.SESSION_ID_ENV} environment variable, but
+   * may be overridden using
+   * {@link webdriver.AbstractBuilder#usingSession}.
+   * @type {string}
+   * @private
+   */
+  this.sessionId_ =
+      webdriver.process.getEnv(webdriver.AbstractBuilder.SESSION_ID_ENV);
+
+  /**
+   * The desired capabilities to use when creating a new session.
+   * @type {!Object.&lt;*>}
+   * @private
+   */
+  this.capabilities_ = {};
+};
+
+
+/**
+ * Environment variable that defines the session ID of an existing WebDriver
+ * session to use when creating clients. If set, all new Builder instances will
+ * default to creating clients that use this session. To create a new session,
+ * use {@linkcode #useExistingSession(boolean)}. The use of this environment
+ * variable requires that {@link webdriver.AbstractBuilder.SERVER_URL_ENV} also
+ * be set.
+ * @type {string}
+ * @const
+ * @see webdriver.process.getEnv
+ */
+webdriver.AbstractBuilder.SESSION_ID_ENV = 'wdsid';
+
+
+/**
+ * Environment variable that defines the URL of the WebDriver server that
+ * should be used for all new WebDriver clients. This setting may be overridden
+ * using {@linkcode #usingServer(url)}.
+ * @type {string}
+ * @const
+ * @see webdriver.process.getEnv
+ */
+webdriver.AbstractBuilder.SERVER_URL_ENV = 'wdurl';
+
+
+/**
+ * The default URL of the WebDriver server to use if
+ * {@link webdriver.AbstractBuilder.SERVER_URL_ENV} is not set.
+ * @type {string}
+ * @const
+ */
+webdriver.AbstractBuilder.DEFAULT_SERVER_URL = 'http://localhost:4444/wd/hub';
+
+
+/**
+ * Configures which WebDriver server should be used for new sessions. Overrides
+ * the value loaded from the {@link webdriver.AbstractBuilder.SERVER_URL_ENV}
+ * upon creation of this instance.
+ * @param {string} url URL of the server to use.
+ * @return {!webdriver.AbstractBuilder} This Builder instance for chain calling.
+ */
+webdriver.AbstractBuilder.prototype.usingServer = function(url) {
+  this.serverUrl_ = url;
+  return this;
+};
+
+
+/**
+ * @return {string} The URL of the WebDriver server this instance is configured
+ *     to use.
+ */
+webdriver.AbstractBuilder.prototype.getServerUrl = function() {
+  return this.serverUrl_;
+};
+
+
+/**
+ * Configures the builder to create a client that will use an existing WebDriver
+ * session.
+ * @param {string} id The existing session ID to use.
+ * @return {!webdriver.AbstractBuilder} This Builder instance for chain calling.
+ */
+webdriver.AbstractBuilder.prototype.usingSession = function(id) {
+  this.sessionId_ = id;
+  return this;
+};
+
+
+/**
+ * @return {string} The ID of the session, if any, this builder is configured
+ *     to reuse.
+ */
+webdriver.AbstractBuilder.prototype.getSession = function() {
+  return this.sessionId_;
+};
+
+
+/**
+ * Sets the desired capabilities when requesting a new session.
+ * @param {!Object.&lt;*>} capabilities The desired capabilities for a new
+ *     session.
+ * @return {!webdriver.AbstractBuilder} This Builder instance for chain calling.
+ */
+webdriver.AbstractBuilder.prototype.withCapabilities = function(capabilities) {
+  this.capabilities_ = capabilities;
+  return this;
+};
+
+
+/**
+ * @return {!Object.&lt;*>} The current desired capabilities for this builder.
+ */
+webdriver.AbstractBuilder.prototype.getCapabilities = function() {
+  return this.capabilities_;
+};
+
+
+/**
+ * Builds a new {@link webdriver.WebDriver} instance using this builder's
+ * current configuration.
+ * @return {!webdriver.WebDriver} A new WebDriver client.
+ */
+webdriver.AbstractBuilder.prototype.build = goog.abstractMethod;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:40 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

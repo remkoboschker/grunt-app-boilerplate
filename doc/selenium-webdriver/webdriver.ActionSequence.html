@@ -1,0 +1,2670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Class: ActionSequence</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Class: ActionSequence</h1>
+    
+    
+
+
+
+<section>
+    
+<header>
+    <h2>
+    ActionSequence
+    </h2>
+    
+</header>  
+
+<article>
+    <div class="container-overview">
+    
+    
+    
+        
+<dt>
+    <h4 class="name" id="ActionSequence"><span class="type-signature"></span>new ActionSequence<span class="signature">(driver)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Class for defining sequences of complex user interactions. Each sequence
+will not be executed until #perform is called.
+
+<p>Example:<pre><code>
+  new webdriver.ActionSequence(driver).
+      keyDown(webdriver.Key.SHIFT).
+      click(element1).
+      click(element2).
+      dragAndDrop(element3, element4).
+      keyUp(webdriver.Key.SHIFT).
+      perform();
+</pre></code>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>driver</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebDriver.html">webdriver.WebDriver</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The driver instance to use.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 43
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+    
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+        <h3 class="subsection-title">Members</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="actions_"><span class="type-signature">&lt;private> </span>actions_<span class="type-signature"> :Array.&lt;{description: string, command: !webdriver.Command}></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 55
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="driver_"><span class="type-signature">&lt;private> </span>driver_<span class="type-signature"> :<a href="webdriver.WebDriver.html">webdriver.WebDriver</a></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 49
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+        <h3 class="subsection-title">Methods</h3>
+        
+        <dl>
+            
+<dt>
+    <h4 class="name" id="checkModifierKey_"><span class="type-signature">&lt;private, static> </span>checkModifierKey_<span class="signature">(key)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Checks that a key is a modifier key.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Key">webdriver.Key</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The key to check.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 306
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    <h5>Throws:</h5>
+    
+            
+<div class="param-desc">
+    If the key is not a modifier key.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="click"><span class="type-signature"></span>click<span class="signature">(<span class="optional">opt_elementOrButton</span>, <span class="optional">opt_button</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Clicks a mouse button.
+
+<p>If an element is provided, the mouse will first be moved to the center
+of that element. This is equivalent to:
+<pre><code>sequence.mouseMove(element).click()</code></pre>
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_elementOrButton</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+|
+
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Either
+    the element to interact with or the button to click with.
+    Defaults to <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a> if neither an element nor
+    button is specified.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_button</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The button to use. Defaults to
+    <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a>. Ignored if a button is provided as the
+    first argument.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 249
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="doubleClick"><span class="type-signature"></span>doubleClick<span class="signature">(<span class="optional">opt_elementOrButton</span>, <span class="optional">opt_button</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Double-clicks a mouse button.
+
+<p>If an element is provided, the mouse will first be moved to the center of
+that element. This is equivalent to:
+<pre><code>sequence.mouseMove(element).doubleClick()</code></pre>
+
+<p>Warning: this method currently only supports the left mouse button. See
+http://code.google.com/p/selenium/issues/detail?id=4047
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_elementOrButton</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+|
+
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Either
+    the element to interact with or the button to click with.
+    Defaults to <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a> if neither an element nor
+    button is specified.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_button</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The button to use. Defaults to
+    <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a>. Ignored if a button is provided as the
+    first argument.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 275
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="dragAndDrop"><span class="type-signature"></span>dragAndDrop<span class="signature">(element, location)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Convenience function for performing a "drag and drop" manuever. The target
+element may be moved to the location of another element, or by an offset (in
+pixels).
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>element</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The element to drag.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>location</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">!webdriver.WebElement</span>
+|
+
+<span class="param-type">{x: number, y: number}</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The
+    location to drag to, either as another WebElement or an offset in pixels.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 228
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="keyDown"><span class="type-signature"></span>keyDown<span class="signature">(key)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Performs a modifier key press. The modifier key is <em>not released</em>
+until #keyUp or #sendKeys is called. The key press will be
+targetted at the currently focused element.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Key">webdriver.Key</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The modifier key to push. Must be one of
+    {ALT, CONTROL, SHIFT, COMMAND, META}.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 323
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    <h5>Throws:</h5>
+    
+            
+<div class="param-desc">
+    If the key is not a valid modifier key.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="keyUp"><span class="type-signature"></span>keyUp<span class="signature">(key)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Performs a modifier key release. The release is targetted at the currently
+focused element.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>key</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Key">webdriver.Key</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The modifier key to release. Must be one of
+    {ALT, CONTROL, SHIFT, COMMAND, META}.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 337
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    <h5>Throws:</h5>
+    
+            
+<div class="param-desc">
+    If the key is not a valid modifier key.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="mouseDown"><span class="type-signature"></span>mouseDown<span class="signature">(<span class="optional">opt_elementOrButton</span>, <span class="optional">opt_button</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Presses a mouse button. The mouse button will not be released until
+#mouseUp is called, regardless of whether that call is made in this
+sequence or another. The behavior for out-of-order events (e.g. mouseDown,
+click) is undefined.
+
+<p>If an element is provided, the mouse will first be moved to the center
+of that element. This is equivalent to:
+<pre><code>sequence.mouseMove(element).mouseDown()</code></pre>
+
+<p>Warning: this method currently only supports the left mouse button. See
+http://code.google.com/p/selenium/issues/detail?id=4047
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_elementOrButton</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+|
+
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Either
+    the element to interact with or the button to click with.
+    Defaults to <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a> if neither an element nor
+    button is specified.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_button</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The button to use. Defaults to
+    <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a>. Ignored if a button is provided as the
+    first argument.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 185
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="mouseMove"><span class="type-signature"></span>mouseMove<span class="signature">(location, <span class="optional">opt_offset</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Moves the mouse.  The location to move to may be specified in terms of the
+mouse's current location, an offset relative to the top-left corner of an
+element, or an element (in which case the middle of the element is used).
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>location</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">!webdriver.WebElement</span>
+|
+
+<span class="param-type">{x: number, y: number}</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The
+    location to drag to, as either another WebElement or an offset in pixels.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_offset</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">{x: number, y: number}</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">An optional offset, in pixels.
+    Defaults to (0, 0).</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 103
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="mouseUp"><span class="type-signature"></span>mouseUp<span class="signature">(<span class="optional">opt_elementOrButton</span>, <span class="optional">opt_button</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Releases a mouse button. Behavior is undefined for calling this function
+without a previous call to #mouseDown.
+
+<p>If an element is provided, the mouse will first be moved to the center
+of that element. This is equivalent to:
+<pre><code>sequence.mouseMove(element).mouseUp()</code></pre>
+
+<p>Warning: this method currently only supports the left mouse button. See
+http://code.google.com/p/selenium/issues/detail?id=4047
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_elementOrButton</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+|
+
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Either
+    the element to interact with or the button to click with.
+    Defaults to <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a> if neither an element nor
+    button is specified.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_button</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The button to use. Defaults to
+    <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a>. Ignored if a button is provided as the
+    first argument.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 212
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="perform"><span class="type-signature"></span>perform<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Executes this action sequence.
+    </div>
+    
+
+    
+    
+    
+    
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 79
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A promise that will be resolved once
+    this sequence has completed.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.promise.Promise.html">webdriver.promise.Promise</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="schedule_"><span class="type-signature">&lt;private> </span>schedule_<span class="signature">(description, command)</span><span class="type-signature"></span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Schedules an action to be executed each time #perform is called on
+this instance.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">A description of the command.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>command</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.Command.html">webdriver.Command</a></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The command.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 66
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scheduleKeyboardAction_"><span class="type-signature">&lt;private> </span>scheduleKeyboardAction_<span class="signature">(description, keys)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Schedules a keyboard action.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">A simple descriptive label for the scheduled
+    action.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>keys</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">Array.&lt;(string</span>
+|
+
+<span class="param-type">!webdriver.Key)></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The keys to send.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 290
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="scheduleMouseAction_"><span class="type-signature">&lt;private> </span>scheduleMouseAction_<span class="signature">(description, commandName, <span class="optional">opt_elementOrButton</span>, <span class="optional">opt_button</span>)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Schedules a mouse action.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		<th>Argument</th>
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>description</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">A simple descriptive label for the scheduled
+    action.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>commandName</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#CommandName">webdriver.CommandName</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The name of the command.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_elementOrButton</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.WebElement.html">webdriver.WebElement</a></span>
+|
+
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">Either
+    the element to interact with or the button to click with.
+    Defaults to <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a> if neither an element nor
+    button is specified.</td>
+        </tr>
+	
+	
+	
+        <tr>
+            
+                <td class="name"><code>opt_button</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type"><a href="webdriver.html#Button">webdriver.Button</a></span>
+
+
+            
+            </td>
+            
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+                    
+                
+                </td>
+            
+            
+            
+            
+            <td class="description last">The button to use. Defaults to
+    <a href="webdriver.html#Button#LEFT">webdriver.Button.LEFT</a>. Ignored if the previous argument is
+    provided as a button.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 144
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        
+            
+<dt>
+    <h4 class="name" id="sendKeys"><span class="type-signature"></span>sendKeys<span class="signature">(var_args)</span><span class="type-signature"> &rarr; {<a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a>}</span></h4>
+    
+    
+</dt>
+<dd>
+    
+    
+    <div class="description">
+        Simulates typing multiple keys. Each modifier key encountered in the
+sequence will not be released until it is encountered again. All key events
+will be targetted at the currently focused element.
+    </div>
+    
+
+    
+    
+    
+    
+    
+        <h5>Parameters:</h5>
+        
+
+<table class="params">
+    <thead>
+	<tr>
+		
+		<th>Name</th>
+		
+		
+		<th>Type</th>
+		
+		
+		
+		
+		
+		<th class="last">Description</th>
+	</tr>
+	</thead>
+	
+	<tbody>
+	
+	
+        <tr>
+            
+                <td class="name"><code>var_args</code></td>
+            
+            
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+|
+
+<span class="param-type">!webdriver.Key</span>
+|
+
+<span class="param-type">!Array.&lt;(string</span>
+|
+
+<span class="param-type">!webdriver.Key)></span>
+
+
+            
+            </td>
+            
+            
+            
+            
+            
+            <td class="description last">The keys to type.</td>
+        </tr>
+	
+	
+	</tbody>
+</table>
+    
+    
+    
+<dl class="details">
+    
+        
+    
+    
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="actionsequence.js.html">actionsequence.js</a>, line 352
+    </li></ul></dd>
+    
+    
+    
+    
+    
+    
+    
+</dl>
+
+    
+    
+    
+    
+    <h5>Throws:</h5>
+    
+            
+<div class="param-desc">
+    If the key is not a valid modifier key.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type">Error</span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+    <h5>Returns:</h5>
+    
+            
+<div class="param-desc">
+    A self reference.
+</div>
+
+
+
+<dl>
+	<dt>
+		Type
+	</dt>
+	<dd>
+		
+<span class="param-type"><a href="webdriver.ActionSequence.html">webdriver.ActionSequence</a></span>
+
+
+	</dd>
+</dl>
+
+        
+    
+    
+</dd>
+
+        </dl>
+    
+    
+    
+    
+    
+</article>
+
+</section>  
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:48 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>

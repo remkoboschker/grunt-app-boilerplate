@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: process.js</title>
+    
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+    
+    <h1 class="page-title">Source: process.js</h1>
+    
+    
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source"><code>// Copyright 2011 Software Freedom Conservancy. All Rights Reserved.
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//      http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+/**
+ * @fileoverview Provides access to the current process' environment variables.
+ * When running in node, this is simply a wrapper for {@linkcode process.env}.
+ * When running in a browser, environment variables are loaded by parsing the
+ * current URL's query string. Variables that have more than one variable will
+ * be initialized to the JSON representation of the array of all values,
+ * otherwise the variable will be initialized to a sole string value. If a
+ * variable does not have any values, but is nonetheless present in the query
+ * string, it will be initialized to an empty string.
+ * After the initial parsing, environment variables must be queried and set
+ * through the API defined in this file.
+ */
+
+goog.provide('webdriver.process');
+
+goog.require('goog.Uri');
+goog.require('goog.array');
+goog.require('goog.json');
+
+
+/**
+ * @return {boolean} Whether the current process is Node's native process
+ *     object.
+ */
+webdriver.process.isNative = function() {
+  return webdriver.process.IS_NATIVE_PROCESS_;
+};
+
+
+/**
+ * Queries for a named environment variable.
+ * @param {string} name The name of the environment variable to look up.
+ * @param {string=} opt_default The default value if the named variable is not
+ *     defined.
+ * @return {string} The queried environment variable.
+ */
+webdriver.process.getEnv = function(name, opt_default) {
+  var value = webdriver.process.PROCESS_.env[name];
+  return goog.isDefAndNotNull(value) ? value : opt_default;
+};
+
+
+/**
+ * Sets an environment value. If the new value is either null or undefined, the
+ *     environment variable will be cleared.
+ * @param {string} name The value to set.
+ * @param {*} value The new value; will be coerced to a string.
+ */
+webdriver.process.setEnv = function(name, value) {
+  webdriver.process.PROCESS_.env[name] =
+      goog.isDefAndNotNull(value) ? value + '' : null;
+};
+
+
+/**
+ * Whether the current environment is using Node's native process object.
+ * @type {boolean}
+ * @const
+ * @private
+ */
+webdriver.process.IS_NATIVE_PROCESS_ = typeof process !== 'undefined';
+
+
+/**
+ * Initializes a process object for use in a browser window.
+ * @param {!Window=} opt_window The window object to initialize the process
+ *     from; if not specified, will default to the current window. Should only
+ *     be set for unit testing.
+ * @return {!Object} The new process object.
+ * @private
+ */
+webdriver.process.initBrowserProcess_ = function(opt_window) {
+  var process = {'env': {}};
+
+  var win = opt_window;
+  if (!win && typeof window != 'undefined') {
+    win = window;
+  }
+
+  // Initialize the global error handler.
+  if (win) {
+    // Initialize the environment variable map by parsing the current URL query
+    // string.
+    if (win.location) {
+      var data = new goog.Uri(win.location).getQueryData();
+      goog.array.forEach(data.getKeys(), function(key) {
+        var values = data.getValues(key);
+        process.env[key] = values.length == 0 ? '' :
+                           values.length == 1 ? values[0] :
+                           goog.json.serialize(values);
+      });
+    }
+  }
+
+  return process;
+};
+
+
+/**
+ * The global process object to use. Will either be Node's global
+ * {@linkcode process} object, or an approximation of it for use in a browser
+ * environment.
+ * @type {!Object}
+ * @const
+ * @private
+ */
+webdriver.process.PROCESS_ = webdriver.process.IS_NATIVE_PROCESS_ ? process :
+    webdriver.process.initBrowserProcess_();
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Index</a></h2><h3>Classes</h3><ul><li><a href="webdriver.AbstractBuilder.html">AbstractBuilder</a></li><li><a href="webdriver.ActionSequence.html">ActionSequence</a></li><li><a href="webdriver.Alert.html">Alert</a></li><li><a href="webdriver.Builder.html">Builder</a></li><li><a href="webdriver.Command.html">Command</a></li><li><a href="webdriver.EventEmitter.html">EventEmitter</a></li><li><a href="webdriver.FirefoxDomExecutor.html">FirefoxDomExecutor</a></li><li><a href="webdriver.http.CorsClient.html">CorsClient</a></li><li><a href="webdriver.http.Executor.html">Executor</a></li><li><a href="webdriver.http.Request.html">Request</a></li><li><a href="webdriver.http.Response.html">Response</a></li><li><a href="webdriver.http.XhrClient.html">XhrClient</a></li><li><a href="webdriver.Locator.html">Locator</a></li><li><a href="webdriver.promise.ControlFlow.html">ControlFlow</a></li><li><a href="webdriver.promise.Deferred.html">Deferred</a></li><li><a href="webdriver.promise.Frame_.html">Frame_</a></li><li><a href="webdriver.promise.Node_.html">Node_</a></li><li><a href="webdriver.promise.Promise.html">Promise</a></li><li><a href="webdriver.promise.Task_.html">Task_</a></li><li><a href="webdriver.Session.html">Session</a></li><li><a href="webdriver.stacktrace.Frame_.html">Frame_</a></li><li><a href="webdriver.stacktrace.Snapshot.html">Snapshot</a></li><li><a href="webdriver.UnhandledAlertError.html">UnhandledAlertError</a></li><li><a href="webdriver.WebDriver.html">WebDriver</a></li><li><a href="webdriver.WebDriver.Navigation.html">Navigation</a></li><li><a href="webdriver.WebDriver.Options.html">Options</a></li><li><a href="webdriver.WebDriver.TargetLocator.html">TargetLocator</a></li><li><a href="webdriver.WebDriver.Timeouts.html">Timeouts</a></li><li><a href="webdriver.WebDriver.Window.html">Window</a></li><li><a href="webdriver.WebElement.html">WebElement</a></li></ul>
+</nav>
+
+<br clear="both">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.1.1</a> on Sun Mar 10 2013 23:26:40 GMT+0100 (CET)
+</footer>
+
+<script> prettyPrint(); </script>
+</body>
+</html>
