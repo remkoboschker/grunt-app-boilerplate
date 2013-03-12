@@ -5,8 +5,8 @@ require ["app/vendor/chai/chai"], (chai) ->
   
   # Setup chai
   window.assert = chai.assert
-  window.should = chai.should
   window.expect = chai.expect
+  window.should = chai.should()
 
   require ["build/spec/hello"], ->
     

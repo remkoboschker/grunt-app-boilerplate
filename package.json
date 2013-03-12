@@ -31,6 +31,8 @@
     "grunt-open": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "grunt-exec": "latest",
-    "selenium-webdriver": "latest"
+    "selenium-webdriver": "latest",
+    "mocha": "latest",
+    "chai": "latest"
   }
 }

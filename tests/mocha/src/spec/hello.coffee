@@ -11,7 +11,4 @@ define ["app/modules/hello/scripts/hello"], (HelloModule) ->
     it "should return given name", ->
       name = "Andrew"
       @hello.setName name
-      expect(@hello.getName()).to.eql name
-
-
-
+      @hello.getName().should.equal name
