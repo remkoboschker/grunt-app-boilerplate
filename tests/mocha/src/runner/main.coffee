@@ -1,15 +1,16 @@
 mocha.setup "bdd"
+should = chai.should()
 
 require.config
+
   paths: {
-    'chai': 'app/vendor/chai/chai'
+    'HelloModule': "app/modules/hello/scripts/hello"
+    'HelloModuleTest': "build/spec/hello.test"
   }
 
-  deps: ["chai", "build/spec/hello"]
+  deps: ["HelloModuleTest"]
 
-  callback: (chai)->
-    window.expect = chai.expect
-
+  callback: ->
     if window.mochaPhantomJS
       mochaPhantomJS.run()
     else

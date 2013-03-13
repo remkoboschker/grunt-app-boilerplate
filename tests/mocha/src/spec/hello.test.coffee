@@ -1,4 +1,6 @@
-define ["app/modules/hello/scripts/hello"], (HelloModule) ->
+define ["HelloModule"], (HelloModule) ->
+
+  should = chai.should()
   
   describe "Hello Module", ->
     
@@ -11,5 +13,4 @@ define ["app/modules/hello/scripts/hello"], (HelloModule) ->
     it "should return given name", ->
       name = "Andrew"
       @hello.setName name
-      # @hello.getName().should.equal name
-      expect(@hello.getName()).to.equal name
+      @hello.getName().should.equal name

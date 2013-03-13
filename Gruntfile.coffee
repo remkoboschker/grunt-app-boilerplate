@@ -127,11 +127,20 @@ module.exports = (grunt) ->
 
       tests_mocha:
         files: [
-          expand: true
-          cwd: "tests/mocha/src/"
-          src: ["{runner,spec}/**/*.coffee"]
-          dest: "tests/mocha/build/"
-          ext: ".js"
+          {
+            expand: true
+            cwd: "tests/mocha/src/"
+            src: ["runner/*.coffee"]
+            dest: "tests/mocha/build/"
+            ext: ".js"
+          },
+          {
+            expand: true
+            cwd: "tests/mocha/src/"
+            src: ["spec/**/*.coffee"]
+            dest: "tests/mocha/build/"
+            ext: ".test.js"
+          }
         ]
     
     #compile SASS files into CSS
