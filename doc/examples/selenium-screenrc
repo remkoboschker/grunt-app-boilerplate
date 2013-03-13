@@ -3,11 +3,14 @@ hardstatus string '%{gk}[ %{G}%H %{g}][%= %{wk}%?%-Lw%?%{=b kR} (%{W}%n*%f %t%?(
 
 startup_message off
 
-screen -t window0 bash
-screen -t window1 bash
-select window0
+screen -t chrome bash
+screen -t firefox bash
+
+select chrome
+exec bash -c "rake selenium AO2_BASE_URL=\"http://grid.ao-vm25.adocean.lan/\" SELENIUM_BROWSERS=\"[\'chrome\']\" REMOTE=true HUB_HOST=ao-vm25.adocean.lan"
+
 split
 focus down
-select window1
-exec bash -c "DISPLAY=:99 java -jar $HOME/selenium-server-standalone.jar"
-focus up
+
+select firefox
+exec bash -c "rake selenium AO2_BASE_URL=\"http://grid.ao-vm25.adocean.lan/\" SELENIUM_BROWSERS=\"[\'firefox\']\" REMOTE=true HUB_HOST=ao-vm25.adocean.lan"

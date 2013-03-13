@@ -1,0 +1,48 @@
+#!/bin/bash
+
+APP_NAME="app"
+APP_LOG_DIR=/var/log/myapp
+APP_LOG_OUTPUT_FILE=app-output.log
+APP_LOG_ERROR_FILE=app-error.log
+APP_PID_FILE=/var/run/myapp/app.pid
+APP_ARGUMENTS="--help"
+
+case "${1:-''}" in
+        'start')
+                if test -f $APP_PID_FILE
+                then
+                        echo "$APP_NAME is already running."
+                else
+                        app $APP_ARGUMENTS > $myapp_LOG_DIR/$APP_LOG_OUTPUT_FILE 2> $APP_LOG_DIR/$APP_LOG_ERROR_FILE & echo $! > $APP_PID_FILE
+                        echo "Starting $APP_NAME"
+
+                        error=$?
+                        if test $error -gt 0
+                        then
+                                echo "${bon}Error $error! Couldn't start $APP_NAME!${boff}"
+                        fi
+                fi
+        ;;
+        'stop')
+                if test -f $APP_PID_FILE
+                then
+                        echo "Stopping $APP_NAME..."
+                        PID=`cat $APP_PID_FILE`
+                        kill -3 $PID
+                        if kill -9 $PID ;
+                                then
+                                        sleep 2
+                                        test -f $APP_PID_FILE && rm -f $myapp_PID_FILE
+                                else
+                                        echo "$APP_NAME could not be stopped..."
+                                fi
+                else
+                        echo "$APP_NAME is not running."
+                fi
+                ;;
+        *)      # no parameter specified
+                echo "Usage: $0 start|stop"
+                exit 1
+        ;;
+esac
+
