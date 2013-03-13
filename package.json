@@ -4,13 +4,19 @@
   "author": "Andrei Bahdanovich <bahdanovich@gmail.com>",
   "homepage": "https://github.com/abahdanovich/grunt-app-boilerplate",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/abahdanovich/grunt-app-boilerplate.git"
+  },
   "scripts": {
     "test": "grunt && grunt test:mocha"
   },
-  "devDependencies": {
-    "grunt": "*",
+  "dependencies": {
     "grunt-cli": "*",
+    "grunt": "*",
     "bower": "*",
+    "mocha": "*",
+    "chai": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-sass": "*",
@@ -30,9 +36,7 @@
     "grunt-bump": "*",
     "grunt-open": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-exec": "latest",
-    "selenium-webdriver": "latest",
-    "mocha": "latest",
-    "chai": "latest"
+    "grunt-exec": "*",
+    "selenium-webdriver": "*"
   }
 }
