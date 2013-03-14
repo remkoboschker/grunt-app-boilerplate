@@ -1,5 +1,5 @@
 mocha.setup("bdd");
-should = chai.should();
+var should = chai.should();
 
 var tests = Object.keys(window.__testacular__.files).filter(function (file) {
   return /\.test\./.test(file);
