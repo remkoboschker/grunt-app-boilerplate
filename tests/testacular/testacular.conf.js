@@ -1,28 +1,24 @@
-// base path, that will be used to resolve files and exclude
 basePath = '';
 
-// list of files / patterns to load in the browser
 files = [
   MOCHA,
   MOCHA_ADAPTER,
+
+  'app/vendor/chai/chai.js',
+
   REQUIRE,
   REQUIRE_ADAPTER,
 
-  { pattern: 'app/vendor/chai/chai.js', included: false },
+  'runner/main.js',
 
-  // all the sources, tests
   { pattern: 'app/{modules,scripts,templates}/**/*', included: false},
-  { pattern: 'spec/**/*.coffee', included: false },
-
-  'runner/main.js'
+  { pattern: 'spec/**/*', included: false}
 ];
 
-// list of files to exclude
 exclude = [
   'testacular.conf.js'
 ];
 
-// test results reporter to use
 // possible values: dots || progress
 reporter = 'dots';
 
@@ -40,7 +36,7 @@ colors = true;
 logLevel = LOG_INFO;
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = false;
+autoWatch = true;
 
 // Start these browsers, currently available:
 // - Chrome
@@ -49,12 +45,12 @@ autoWatch = false;
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = [Chrome];
+browsers = ['Chrome', 'Firefox'];
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
 singleRun = false;
 
 preprocessors = {
-  'spec/**/*.coffee': 'coffee'
+  '**/*.coffee': 'coffee'
 };

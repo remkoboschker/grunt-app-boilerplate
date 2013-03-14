@@ -1,14 +1,17 @@
+mocha.setup("bdd");
+should = chai.should();
+
 var tests = Object.keys(window.__testacular__.files).filter(function (file) {
   return /\.test\./.test(file);
 });
 
 require.config({
-  // Testacular serves files under /base, which is the basePath from your config file
-  baseUrl: '/',
+  baseUrl: '/base',
 
-  // dynamically load all test files
+  paths: {
+    'HelloModule': "app/modules/hello/scripts/hello"
+  },
+
   deps: tests,
-
-  // we have to kick of jasmine, as it is asynchronous
   callback: window.__testacular__.start
 });

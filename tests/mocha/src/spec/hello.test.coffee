@@ -2,7 +2,7 @@ define ["HelloModule"], (HelloModule) ->
 
   should = chai.should()
   
-  describe "Hello Module", ->
+  describe "Hello Module test", ->
     
     beforeEach ->
       @hello = new HelloModule()
