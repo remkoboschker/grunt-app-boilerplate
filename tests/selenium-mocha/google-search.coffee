@@ -15,8 +15,10 @@ bootstrap.test_runner (driver) ->
 
       it "should contain header element", (done) ->
 
-        driver.get("http://localhost:9002/").then ->
+        driver.get "http://localhost:9002/"
+        driver.findElement(By.tagName("h1")).then ->
           done()
+
         # driver.findElement(By.name("q")).sendKeys "webdriver"
         # driver.findElement(By.name("btnG")).click()
 

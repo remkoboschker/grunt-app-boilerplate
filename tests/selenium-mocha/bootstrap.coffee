@@ -15,6 +15,5 @@ exports.test_runner = (describe_tests) ->
             describe_tests(driver)
 
         after ->
-            console.log "driver"
             driver.close()
             driver.quit()
