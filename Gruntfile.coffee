@@ -405,7 +405,8 @@ module.exports = (grunt) ->
 
       selenium:
         cmd: (browser) ->
-          "BROWSER_NAME=#{browser} mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/"
+          command = "mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/"
+          if browser then "BROWSERS=#{browser} #{command}" else command
 
   # "official" tasks
   grunt.loadNpmTasks "grunt-contrib-coffee"
@@ -469,7 +470,7 @@ module.exports = (grunt) ->
   # Selenium tests
   grunt.registerTask "test:selenium:chrome", ["exec:selenium:chrome"]
   grunt.registerTask "test:selenium:firefox", ["exec:selenium:firefox"]
-  grunt.registerTask "test:selenium:all", ["test:selenium:chrome", "test:selenium:firefox"]
+  grunt.registerTask "test:selenium", ["exec:selenium"]
 
   # all tests
   grunt.registerTask "test", ["test:mocha", "test:casperjs"]
