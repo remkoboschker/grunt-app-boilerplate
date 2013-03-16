@@ -468,9 +468,9 @@ module.exports = (grunt) ->
   grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local"]
 
   # Selenium tests
-  grunt.registerTask "test:selenium:chrome", ["exec:selenium:chrome"]
-  grunt.registerTask "test:selenium:firefox", ["exec:selenium:firefox"]
-  grunt.registerTask "test:selenium", ["exec:selenium"]
+  grunt.registerTask "test:selenium:chrome", ["connect:debug", "exec:selenium:chrome"]
+  grunt.registerTask "test:selenium:firefox", ["connect:debug", "exec:selenium:firefox"]
+  grunt.registerTask "test:selenium", ["connect:debug", "exec:selenium"]
 
   # all tests
   grunt.registerTask "test", ["test:mocha", "test:casperjs"]
