@@ -45,7 +45,7 @@ module.exports = (grunt) ->
     # },
     
     # build minimized CSS files
-    mincss:
+    cssmin:
       release:
         expand: true
         cwd: "build/debug/"
@@ -421,7 +421,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-connect"
   
   #grunt.loadNpmTasks('grunt-contrib-uglify');
-  grunt.loadNpmTasks "grunt-contrib-mincss"
+  grunt.loadNpmTasks "grunt-contrib-cssmin"
   grunt.loadNpmTasks "grunt-contrib-requirejs"
   
   # "unofficial" tasks
@@ -444,7 +444,7 @@ module.exports = (grunt) ->
   
   # build tasks, dependent on "default" task
   grunt.registerTask "build:debug", ["clean:debug", "requirejs:debug", "concat:styles", "targethtml:debug", "copy:debug"]
-  grunt.registerTask "build:release", ["clean:release", "requirejs:release", "mincss", "targethtml:release", "copy:release"]
+  grunt.registerTask "build:release", ["clean:release", "requirejs:release", "cssmin", "targethtml:release", "copy:release"]
   
   # debug build + test
   grunt.registerTask "run:debug", ["default", "build:debug", "test:mocha", "test:casperjs"]
