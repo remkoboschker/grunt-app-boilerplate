@@ -168,39 +168,6 @@ module.exports = (grunt) ->
         options:
           namespace: false
           amd: true
-          processName: (filename) ->
-            
-            # Return new array with duplicate values removed
-            Array::unique = ->
-              a = []
-              l = @length
-              i = 0
-
-              while i < l
-                j = i + 1
-
-                while j < l
-                  
-                  # If this[i] is found later in the array
-                  j = ++i  if this[i] is this[j]
-                  j++
-                a.push this[i]
-                i++
-              a
-
-            
-            # trim extension
-            filename = filename.substring(0, filename.lastIndexOf("."))
-            parts = filename.split("/")
-            
-            # remove "app" part
-            parts.shift()
-            
-            # remove "templates" part
-            parts = parts.filter((part) ->
-              part isnt "templates"
-            )
-            parts.unique().join "/"
 
         files: [
           expand: true
