@@ -16,7 +16,7 @@ files = [
 ];
 
 exclude = [
-  'testacular.conf.js'
+  'karma.conf.js'
 ];
 
 // possible values: dots || progress
@@ -45,7 +45,7 @@ autoWatch = true;
 // - Opera
 // - Safari
 // - PhantomJS
-browsers = ['Chrome', 'Firefox', 'PhantomJS'];
+browsers = ['PhantomJS'];
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit

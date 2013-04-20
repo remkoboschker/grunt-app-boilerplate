@@ -7,7 +7,8 @@ module.exports = (grunt) ->
     # Metadata.
     pkg: grunt.file.readJSON("package.json")
     banner: "/**\n * <%= pkg.name %> - v<%= pkg.version %> - " + "<%= grunt.template.today(\"yyyy-mm-dd\") %>\n" + "<%= pkg.homepage ? \" * \" + pkg.homepage + \"\\n\" : \"\" %>" + " * Copyright (c) <%= grunt.template.today(\"yyyy\") %> <%= pkg.author %>\n" + "<%= pkg.license ? \" * Licensed: \" + pkg.license + \"\\n\" : \"\" %> */\n\n"
-    
+    hostname: "ubuntu.dev"
+
     # concatenate files
     concat:
       options:
@@ -250,6 +251,7 @@ module.exports = (grunt) ->
     # connect middleware (http server serving static files)
     connect:
       options:
+        hostname: "*"
         middleware: (connect, options) ->
           modRewrite = require("connect-modrewrite")
           [modRewrite(["^/#/.*$ /index.html [L]"]), connect.static(options.base)]
@@ -308,7 +310,7 @@ module.exports = (grunt) ->
           #grep: 'food'
           
           # URLs passed through as options
-          urls: ["http://localhost:" + "<%= connect.mocha.options.port %>" + "/index.html"]
+          urls: ["http://" + "<%= hostname %>" + ":" + "<%= connect.mocha.options.port %>" + "/index.html"]
           
           # Indicates whether 'mocha.run()' should be executed in 'bridge.js'
           run: false
@@ -317,16 +319,16 @@ module.exports = (grunt) ->
     # open page in browser when http server starts
     open:
       dev:
-        path: "http://localhost:9001"
+        path: "http://" + "<%= hostname %>" + ":9001"
 
       debug:
-        path: "http://localhost:9002"
+        path: "http://" + "<%= hostname %>" + ":9002"
 
       release:
-        path: "http://localhost:9003"
+        path: "http://" + "<%= hostname %>" + ":9003"
 
       test:
-        path: "http://localhost:9004"
+        path: "http://" + "<%= hostname %>" + ":9004"
 
       doc:
         path: "./doc/codo/index.html"

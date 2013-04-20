@@ -1,7 +1,7 @@
 mocha.setup("bdd");
 var should = chai.should();
 
-var tests = Object.keys(window.__testacular__.files).filter(function (file) {
+var tests = Object.keys(window.__karma__.files).filter(function (file) {
   return /\.test\./.test(file);
 });
 
@@ -13,5 +13,5 @@ require.config({
   },
 
   deps: tests,
-  callback: window.__testacular__.start
+  callback: window.__karma__.start
 });
