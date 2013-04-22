@@ -238,10 +238,15 @@ module.exports = (grunt) ->
           port: 9003
           base: "build/release"
 
-      mocha:
+      test:
         options:
           port: 9004
           base: "tests/mocha"
+
+      doc:
+        options:
+          port: 9005
+          base: "doc/codo"
 
     
     # casper.js functional tests (using phantom.js headless webkit browser)
@@ -277,7 +282,7 @@ module.exports = (grunt) ->
           #grep: 'food'
           
           # URLs passed through as options
-          urls: ["http://" + "<%= hostname %>" + ":" + "<%= connect.mocha.options.port %>" + "/index.html"]
+          urls: ["http://" + "<%= hostname %>" + ":" + "<%= connect.test.options.port %>" + "/index.html"]
           
           # Indicates whether 'mocha.run()' should be executed in 'bridge.js'
           run: false
@@ -298,10 +303,7 @@ module.exports = (grunt) ->
         path: "http://" + "<%= hostname %>" + ":9004"
 
       doc:
-        path: "./doc/codo/index.html"
-
-      doc_selenium:
-        path: "./doc/selenium-webdriver/index.html"
+        path: "http://" + "<%= hostname %>" + ":9005"
     
     # reload page when files change
     reload:
@@ -372,11 +374,6 @@ module.exports = (grunt) ->
 
           cmds.join(" ")
 
-      selenium:
-        cmd: (browser) ->
-          command = "mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/"
-          if browser then "BROWSERS=#{browser} #{command}" else command
-
   # "official" tasks
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
@@ -389,7 +386,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-handlebars"
   grunt.loadNpmTasks "grunt-contrib-connect"
   
-  #grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks "grunt-contrib-cssmin"
   grunt.loadNpmTasks "grunt-contrib-requirejs"
   
@@ -400,7 +396,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-bump"
   grunt.loadNpmTasks "grunt-open"
   grunt.loadNpmTasks "grunt-reload"
-  #grunt.loadNpmTasks "grunt-devtools"
   grunt.loadNpmTasks 'grunt-exec'
   
   # define aliases for scripts/styles/templates tasks
@@ -416,7 +411,7 @@ module.exports = (grunt) ->
   grunt.registerTask "build:release", ["clean:release", "requirejs:release", "cssmin", "targethtml:release", "copy:release"]
   
   # debug build + test
-  grunt.registerTask "run:debug", ["default", "build:debug", "test:mocha", "test:casperjs"]
+  grunt.registerTask "run:debug", ["default", "build:debug", "test:unit", "test:functional"]
   
   # release build + server
   grunt.registerTask "run:full", ["run:debug", "build:release", "server:release"]
@@ -425,27 +420,22 @@ module.exports = (grunt) ->
   grunt.registerTask "server", ["connect:dev", "reload", "open:dev", "watch"]
   grunt.registerTask "server:debug", ["connect:debug", "open:debug", "watch:dummy"]
   grunt.registerTask "server:release", ["connect:release", "open:release", "watch:dummy"]
-  grunt.registerTask "server:mocha", ["connect:mocha", "open:test", "watch:dummy"]
+  grunt.registerTask "server:test", ["connect:test", "open:test", "watch:dummy"]
+  grunt.registerTask "server:doc", ["connect:doc", 'open:doc', "watch:dummy"]
   
-  # CasperJS tests
-  grunt.registerTask "test:casperjs", ["connect:debug", "casperjs"]
+  # functional tests
+  grunt.registerTask "test:functional", ["connect:debug", "casperjs"]
   
-  # Mocha tests
-  grunt.registerTask "test:mocha:rebuild", ["clean:tests_mocha", "coffee:tests_mocha"]
-  grunt.registerTask "test:mocha:local", ["mocha:local"]
-  grunt.registerTask "test:mocha:remote", ["connect:mocha", "mocha:remote"]
-  grunt.registerTask "test:mocha", ["test:mocha:rebuild", "test:mocha:local"]
-
-  # Selenium tests
-  grunt.registerTask "test:selenium:chrome", ["connect:debug", "exec:selenium:chrome"]
-  grunt.registerTask "test:selenium:firefox", ["connect:debug", "exec:selenium:firefox"]
-  grunt.registerTask "test:selenium", ["connect:debug", "exec:selenium"]
+  # unit tests
+  grunt.registerTask "test:unit:rebuild", ["clean:tests_mocha", "coffee:tests_mocha"]
+  grunt.registerTask "test:unit:local", ["mocha:local"]
+  grunt.registerTask "test:unit:remote", ["connect:test", "mocha:remote"]
+  grunt.registerTask "test:unit", ["test:unit:rebuild", "test:unit:local"]
 
   # all tests
-  grunt.registerTask "test", ["test:mocha", "test:casperjs"]
+  grunt.registerTask "test", ["test:unit", "test:functional"]
 
   # documentation
   grunt.registerTask "codo", ["exec:codo"]
-  grunt.registerTask "doc", ["codo", 'open:doc']
-  grunt.registerTask "doc:selenium", ['open:doc_selenium']
+  grunt.registerTask "doc", ["codo"]
 

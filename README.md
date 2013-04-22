@@ -23,13 +23,15 @@ Under the hood, following projects are used:
 Set up
 ======
 
-Install required NPM packages (grunt runner + bower package manager + documentation generating tool):
+Install required NPM packages (grunt runner, bower package manager, documentation generating tool etc.):
 
 ```
 npm install -g grunt-cli
 npm install -g bower
 npm install -g codo
 npm install -g mocha
+npm install -g coffee-script
+npm install -g karma
 
 ```
 
@@ -75,3 +77,18 @@ Folders structure
 * tests - unit and integrational tests
     * casperjs - integrational tests
     * mocha - unit tests
+
+Tests
+=====
+
+Karma tests:
+```
+karma start tests/karma/
+```
+
+Selenium tests:
+```
+#phantomjs --wd
+#grunt server:debug
+BROWSERS="phantomjs" mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/
+```
