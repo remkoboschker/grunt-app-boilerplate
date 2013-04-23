@@ -3,6 +3,8 @@ node_js:
   - 0.10
 before_script:
   - export PATH=$PATH:`pwd`/node_modules/.bin
+  - npm install -g grunt-cli
+  - npm install -g bower
   - bower install
   - gem install sass
 # script:
