@@ -28,8 +28,16 @@ Install required NPM packages (grunt runner, bower package manager, documentatio
 ```
 npm install -g grunt-cli
 npm install -g bower
+```
+
+Extra (doc and tests):
+```
 npm install -g codo
+
 npm install -g mocha
+npm install chai
+npm install selenium-webdriver
+
 npm install -g coffee-script
 npm install -g karma
 

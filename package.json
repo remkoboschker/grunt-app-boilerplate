@@ -9,14 +9,10 @@
     "url": "git://github.com/abahdanovich/grunt-app-boilerplate.git"
   },
   "scripts": {
-    "test": "grunt && grunt test:mocha"
+    "test": "grunt && grunt test:unit"
   },
   "dependencies": {
-    "grunt-cli": "*",
     "grunt": "*",
-    "bower": "*",
-    "mocha": "*",
-    "chai": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-clean": "*",
     "grunt-contrib-sass": "*",
@@ -36,7 +32,6 @@
     "grunt-bump": "*",
     "grunt-open": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-exec": "*",
-    "selenium-webdriver": "*"
+    "grunt-exec": "*"
   }
 }
