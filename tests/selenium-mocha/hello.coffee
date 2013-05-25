@@ -15,7 +15,9 @@ bootstrap.test_runner (driver) ->
 
       it "should contain header element", (done) ->
 
-        driver.get "http://localhost:9002/"
+        connect_hostname = process.env.CONNECT_HOSTNAME or "localhost"
+
+        driver.get "http://"+connect_hostname+":9002/"
         driver.findElement(By.tagName("h1")).then ->
           done()
 

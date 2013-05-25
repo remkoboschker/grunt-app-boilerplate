@@ -91,7 +91,7 @@ Tests
 
 Karma tests:
 ```
-karma start tests/karma/
+karma start tests/karma/karma.conf.js
 ```
 
 Selenium tests:
