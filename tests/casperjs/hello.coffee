@@ -3,12 +3,23 @@ casper_options = {
 }
 
 casper = require('casper').create casper_options
+utils = require('utils')
+system = require('system')
 
-casper.start "http://localhost:9002/", (response) ->
+connect_hostname = system.env.CONNECT_HOSTNAME or "localhost"
+start_url = "http://"+connect_hostname+":9002/"
+
+casper.start start_url, (response) ->
+
+  unless response? 
+    @warn "No response, check if server is running on " + start_url
+
+  @test.assert response?, "Response is non-empty"
+
   page_title = @evaluate ->
     document.title
 
-  @echo 'Page URL is: ' + response.url
+  @echo 'Page URL is: ' + @getCurrentUrl()
   @echo 'Page title is: ' + page_title
 
 casper.then ->  
@@ -17,6 +28,7 @@ casper.then ->
   h1 = @evaluate ->
     document.querySelector 'h1'
 
-  @echo h1.innerHTML
+  if h1? and !!h1
+    @echo h1.innerHTML
 
 casper.run()

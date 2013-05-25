@@ -100,3 +100,21 @@ Selenium tests:
 #grunt server:debug
 BROWSERS="phantomjs" mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/
 ```
+
+Paths and ports
+===============
+
+dev:
+	path: "http://localhost:9001"
+
+debug:
+	path: "http://localhost:9002"
+
+release:
+	path: "http://localhost:9003"
+
+test:
+	path: "http://localhost:9004"
+
+doc:
+	path: "http://localhost:9005"

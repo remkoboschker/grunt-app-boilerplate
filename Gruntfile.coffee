@@ -254,7 +254,7 @@ module.exports = (grunt) ->
     
     # casper.js functional tests (using phantom.js headless webkit browser)
     casperjs:
-      all: "tests/casperjs/**/*.coffee"
+      files: "tests/casperjs/**/*.coffee"
 
     
     # mocha unit tests
@@ -285,28 +285,10 @@ module.exports = (grunt) ->
           #grep: 'food'
           
           # URLs passed through as options
-          urls: ["http://localhost:<%= connect.test.options.port %>/index.html"]
+          urls: ["http://<%= connect_hostname %>:<%= connect.test.options.port %>/index.html"]
           
           # Indicates whether 'mocha.run()' should be executed in 'bridge.js'
           run: false
-
-    
-    # open page in browser when http server starts
-    open:
-      dev:
-        path: "http://localhost:9001"
-
-      debug:
-        path: "http://localhost:9002"
-
-      release:
-        path: "http://localhost:9003"
-
-      test:
-        path: "http://localhost:9004"
-
-      doc:
-        path: "http://localhost:9005"
     
     # reload page when files change
     reload:
@@ -397,7 +379,6 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-casperjs"
   grunt.loadNpmTasks "grunt-mocha"
   grunt.loadNpmTasks "grunt-bump"
-  grunt.loadNpmTasks "grunt-open"
   grunt.loadNpmTasks "grunt-reload"
   grunt.loadNpmTasks 'grunt-exec'
   
@@ -420,11 +401,11 @@ module.exports = (grunt) ->
   grunt.registerTask "run:full", ["run:debug", "build:release", "server:release"]
   
   # server tasks
-  grunt.registerTask "server", ["connect:dev", "reload", "open:dev", "watch"]
-  grunt.registerTask "server:debug", ["connect:debug", "open:debug", "watch:dummy"]
-  grunt.registerTask "server:release", ["connect:release", "open:release", "watch:dummy"]
-  grunt.registerTask "server:test", ["connect:test", "open:test", "watch:dummy"]
-  grunt.registerTask "server:doc", ["connect:doc", 'open:doc', "watch:dummy"]
+  grunt.registerTask "server", ["connect:dev", "reload", "watch"]
+  grunt.registerTask "server:debug", ["connect:debug", "watch:dummy"]
+  grunt.registerTask "server:release", ["connect:release", "watch:dummy"]
+  grunt.registerTask "server:test", ["connect:test", "watch:dummy"]
+  grunt.registerTask "server:doc", ["connect:doc", "watch:dummy"]
   
   # functional tests
   grunt.registerTask "test:functional", ["connect:debug", "casperjs"]

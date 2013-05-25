@@ -30,8 +30,11 @@
     "grunt-mocha": "*",
     "connect-modrewrite": "*",
     "grunt-bump": "*",
-    "grunt-open": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "grunt-exec": "*"
+  },
+  "devDependencies": {
+    "selenium-webdriver": "*",
+    "chai": "*"
   }
 }
