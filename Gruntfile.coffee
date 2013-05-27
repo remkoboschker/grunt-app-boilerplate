@@ -34,7 +34,7 @@ module.exports = (grunt) ->
       styles:
         files:
           "build/debug/styles/vendor.css": ["public/vendor/normalize-css/normalize.css"]
-          "build/debug/styles/main.css": ["public/modules/**/styles/**/*.css", "public/styles/**/*.css"]
+          "build/debug/styles/main.css": ["public/styles/all.css"]
 
     
     # build minimized JS files
@@ -159,7 +159,7 @@ module.exports = (grunt) ->
         files: [
           expand: true
           cwd: "app/"
-          src: ["styles/**/*.scss", "modules/**/styles/**/*.scss"]
+          src: ["styles/all.scss"]
           dest: "public/"
           ext: ".css"
         ]
