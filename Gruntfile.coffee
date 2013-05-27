@@ -153,8 +153,8 @@ module.exports = (grunt) ->
         options:
           style: "expanded"
           
-          #debugInfo: true          
-          lineNumbers: true
+          debugInfo: true          
+          # lineNumbers: true
 
         files: [
           expand: true

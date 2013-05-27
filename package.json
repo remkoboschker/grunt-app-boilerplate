@@ -15,7 +15,7 @@
     "grunt": "*",
     "grunt-contrib-coffee": "*",
     "grunt-contrib-clean": "*",
-    "grunt-contrib-sass": "*",
+    "grunt-contrib-sass": "git://github.com/CTAPbIuMABP/grunt-contrib-sass.git",
     "grunt-contrib-watch": "*",
     "grunt-contrib-jshint": "*",
     "grunt-contrib-concat": "*",
