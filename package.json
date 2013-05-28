@@ -31,7 +31,8 @@
     "connect-modrewrite": "*",
     "grunt-bump": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
-    "grunt-exec": "*"
+    "grunt-exec": "*",
+    "grunt-replace": "*"
   },
   "devDependencies": {
     "selenium-webdriver": "*",

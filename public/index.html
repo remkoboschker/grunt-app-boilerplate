@@ -10,21 +10,9 @@
 
         <!-- Application styles. -->
 
-        <!--(if target dummy)><!-->
+        
         <link rel="stylesheet" href="/vendor/normalize-css/normalize.css">
         <link rel="stylesheet" href="/styles/all.css">
-        <!--<!(endif)-->
-
-        <!--(if target debug)>
-        <link rel="stylesheet" href="/styles/vendor.css">
-        <link rel="stylesheet" href="/styles/main.css">
-        <!(endif)-->
-
-        <!--(if target release)>
-        <link rel="stylesheet" href="/styles/vendor.min.css">
-        <link rel="stylesheet" href="/styles/main.min.css">
-        <!(endif)-->
-
     </head>
     <body>
         <!-- Application container. -->
@@ -33,18 +21,11 @@
 
         <!-- Application source. -->
 
-        <!--(if target dummy)><!-->   
+           
         <script data-main="/scripts/main" src="/vendor/requirejs/require.js"></script>
-        <script>__reloadServerUrl="ws://ubuntu.dev:8001";</script>
-        <script type="text/javascript" src="//ubuntu.dev:8001/__reload/client.js"></script>
-        <!--<!(endif)-->
-
-        <!--(if target debug)>
-        <script src="/scripts/main.js"></script>
-        <!(endif)-->
-
-        <!--(if target release)>
-        <script src="/scripts/main.min.js"></script>
-        <!(endif)-->        
+        <script>__reloadServerUrl="ws://localhost:8001";</script>
+        <script type="text/javascript" src="//localhost:8001/__reload/client.js"></script>
+        
     </body>
 </html>
+<!-- grunt-app-boilerplate v0.3.1, build: 2013-05-28 01:09:59 -->

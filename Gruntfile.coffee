@@ -119,6 +119,7 @@ module.exports = (grunt) ->
     coffee:
       options:
         bare: true
+        sourceMap: true
 
       dev:
         files: [
@@ -180,16 +181,42 @@ module.exports = (grunt) ->
           ext: ".js"
         ]
 
+    # replace macros, creating index.html from template
+    replace: 
+      options: 
+        variables: 
+          'hostname': "<%= connect_hostname %>",
+          'today': "<%= grunt.template.today(\"yyyy-mm-dd hh:MM:ss\") %>",
+          'pkginfo': "<%= pkg.name %> v<%= pkg.version %>"
+
+        prefix: '@@'      
+
+      dev: 
+        files:
+          "public/index.html": "public/index.html.tpl"
+
+      debug: 
+        files:
+          "build/debug/index.html": "public/index.html.tpl"
+
+      release: 
+        files:
+          "build/release/index.html": "public/index.html.tpl"
+
     
     # process conditionals in "public/undex.html" and build apropriate debug/release version
     targethtml:
+      dev:
+        files: 
+          "public/index.html": "public/index.html"
+
       debug:
         files:
-          "build/debug/index.html": "public/index.html"
+          "build/debug/index.html": "build/debug/index.html"
 
       release:
         files:
-          "build/release/index.html": "public/index.html"
+          "build/release/index.html": "build/release/index.html"
 
     
     # clean up folders
@@ -375,6 +402,7 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks "grunt-contrib-requirejs"
   
   # "unofficial" tasks
+  grunt.loadNpmTasks "grunt-replace"
   grunt.loadNpmTasks "grunt-targethtml"
   grunt.loadNpmTasks "grunt-casperjs"
   grunt.loadNpmTasks "grunt-mocha"
@@ -388,11 +416,11 @@ module.exports = (grunt) ->
   grunt.registerTask "templates", ["handlebars"]
   
   # default build task
-  grunt.registerTask "default", ["clean:dev", "scripts", "templates", "styles"]
+  grunt.registerTask "default", ["clean:dev", "scripts", "templates", "styles", "replace:dev", "targethtml:dev"]
   
   # build tasks, dependent on "default" task
-  grunt.registerTask "build:debug", ["clean:debug", "requirejs:debug", "concat:styles", "targethtml:debug", "copy:debug"]
-  grunt.registerTask "build:release", ["clean:release", "requirejs:release", "cssmin", "targethtml:release", "copy:release"]
+  grunt.registerTask "build:debug", ["clean:debug", "requirejs:debug", "concat:styles", "replace:debug", "targethtml:debug", "copy:debug"]
+  grunt.registerTask "build:release", ["clean:release", "requirejs:release", "cssmin", "replace:release", "targethtml:release", "copy:release"]
   
   # debug build + test
   grunt.registerTask "run:debug", ["default", "build:debug", "test:unit", "test:functional"]
