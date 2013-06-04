@@ -185,8 +185,8 @@ module.exports = (grunt) ->
     replace: 
       options: 
         variables: 
-          'hostname': "<%= connect_hostname %>",
-          'today': "<%= grunt.template.today(\"yyyy-mm-dd hh:MM:ss\") %>",
+          'hostname': "<%= connect_hostname %>"
+          'today': "<%= grunt.template.today(\"yyyy-mm-dd hh:MM:ss\") %>"
           'pkginfo': "<%= pkg.name %> v<%= pkg.version %>"
 
         prefix: '@@'      
@@ -203,7 +203,14 @@ module.exports = (grunt) ->
         files:
           "build/release/index.html": "public/index.html.tpl"
 
-    
+    # search-n-replace like with unix sed      
+    sed:
+      remove_sass_debug_info: 
+        path: 'build/debug/styles'
+        pattern: '@media -sass-debug-info.*\n'
+        replacement: ''
+        recursive: true 
+
     # process conditionals in "public/undex.html" and build apropriate debug/release version
     targethtml:
       dev:
@@ -403,6 +410,7 @@ module.exports = (grunt) ->
   
   # "unofficial" tasks
   grunt.loadNpmTasks "grunt-replace"
+  grunt.loadNpmTasks "grunt-sed"
   grunt.loadNpmTasks "grunt-targethtml"
   grunt.loadNpmTasks "grunt-casperjs"
   grunt.loadNpmTasks "grunt-mocha"
@@ -419,7 +427,7 @@ module.exports = (grunt) ->
   grunt.registerTask "default", ["clean:dev", "scripts", "templates", "styles", "replace:dev", "targethtml:dev"]
   
   # build tasks, dependent on "default" task
-  grunt.registerTask "build:debug", ["clean:debug", "requirejs:debug", "concat:styles", "replace:debug", "targethtml:debug", "copy:debug"]
+  grunt.registerTask "build:debug", ["clean:debug", "requirejs:debug", "concat:styles", "replace:debug", "targethtml:debug", "copy:debug", "sed:remove_sass_debug_info"]
   grunt.registerTask "build:release", ["clean:release", "requirejs:release", "cssmin", "replace:release", "targethtml:release", "copy:release"]
   
   # debug build + test

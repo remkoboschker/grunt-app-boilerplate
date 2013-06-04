@@ -1,7 +1,7 @@
 define (require) ->
 
   ###
-  This is sample "Hello" moduke
+  This is sample "Hello" module
   ###
   class HelloModule
 

@@ -9,7 +9,9 @@
     "url": "git://github.com/abahdanovich/grunt-app-boilerplate.git"
   },
   "scripts": {
-    "test": "grunt && grunt test:unit"
+    "test": "grunt && grunt test:unit",
+    "test-karma-start": "karma start tests/karma/karma.conf.js",
+    "test-selenium-mocha": "BROWSERS='phantomjs' mocha -R list --compilers coffee:coffee-script tests/selenium-mocha/"
   },
   "dependencies": {
     "grunt": "*",
@@ -32,7 +34,8 @@
     "grunt-bump": "*",
     "grunt-reload": "git://github.com/webxl/grunt-reload.git",
     "grunt-exec": "*",
-    "grunt-replace": "*"
+    "grunt-replace": "*",
+    "grunt-sed": "*"
   },
   "devDependencies": {
     "selenium-webdriver": "*",
