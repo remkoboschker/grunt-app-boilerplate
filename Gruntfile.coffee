@@ -58,36 +58,28 @@ module.exports = (grunt) ->
         ext: ".min.css"
 
     
-    # JSHint sources
-    jshint:
-      options:
-        curly: true
-        eqeqeq: true
-        immed: true
-        latedef: true
-        newcap: true
-        noarg: true
-        sub: true
-        undef: false
-        unused: true
-        boss: true
-        eqnull: true
-        browser: true
-        globals: {}
+    # JSHint sources (not used since js files are compiled from coffee files)
+    # jshint:
+    #   options:
+    #     curly: true
+    #     eqeqeq: true
+    #     immed: true
+    #     latedef: true
+    #     newcap: true
+    #     noarg: true
+    #     sub: true
+    #     undef: false
+    #     unused: true
+    #     boss: true
+    #     eqnull: true
+    #     browser: true
+    #     globals: {}
 
-    
-    # gruntfile: {
-    #   options: {
-    #     scripturl:true
-    #   },
-    #   src: 'Gruntfile.js'
-    # },
-    # app: {
-    #   src: [
-    #     'public/scripts/**/*.js',
-    #     'public/modules/**/scripts/**/*.js',
-    #   ]
-    # }
+    #   app:
+    #     src: [
+    #       'public/scripts/**/*.js'
+    #       'public/modules/**/scripts/**/*.js'
+    #     ]
     
     # monitor source files for changes and fire compile and reload tasks when some file changes
     watch:

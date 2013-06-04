@@ -1,6 +1,6 @@
 {
   "name": "grunt-app-boilerplate",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "author": "Andrei Bahdanovich <bahdanovich@gmail.com>",
   "homepage": "https://github.com/abahdanovich/grunt-app-boilerplate",
   "license": "MIT",
@@ -19,7 +19,6 @@
     "grunt-contrib-clean": "*",
     "grunt-contrib-sass": "git://github.com/CTAPbIuMABP/grunt-contrib-sass.git",
     "grunt-contrib-watch": "*",
-    "grunt-contrib-jshint": "*",
     "grunt-contrib-concat": "*",
     "grunt-contrib-uglify": "*",
     "grunt-contrib-copy": "*",
