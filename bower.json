@@ -1,0 +1,13 @@
+{
+  "name": "grunt-app-boilerplate",
+  "version": "0.3.5",
+  "dependencies": {
+    "jquery": "*",
+    "handlebars": "*",
+    "normalize-css": "*",
+    "requirejs": "*",
+    "mocha": "*",
+    "chai": "*",
+    "almond": "*"
+  }
+}

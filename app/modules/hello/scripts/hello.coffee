@@ -9,7 +9,7 @@ define (require) ->
     This is sample module constructor
     ###
     constructor: ->
-        @name = 'Grunt app boilerplate'
+        @name = 'Grunt application boilerplate'
         @email = 'bahdanovich[at]gmail[dot]com'
         @homepage = 'https://github.com/abahdanovich/grunt-app-boilerplate'
 

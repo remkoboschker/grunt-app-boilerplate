@@ -385,6 +385,18 @@ module.exports = (grunt) ->
 
           cmds.join(" ")
 
+    bump:
+      options:
+        files: ['package.json', 'bower.json']
+        commit: false
+        push: false
+        createTag: false
+        # commitMessage: 'Release v${version}'
+        # commitFiles: ['package.json', 'bower.json'] // '-a' for all files
+        # tagName: 'v${version}'
+        # tagMessage: 'Version ${version}'
+        # pushTo: 'origin
+
   # "official" tasks
   grunt.loadNpmTasks "grunt-contrib-coffee"
   grunt.loadNpmTasks "grunt-contrib-clean"
