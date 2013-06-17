@@ -21,7 +21,6 @@
         <!(endif)-->
 
         <!--(if target release)>
-        <link rel="stylesheet" href="/styles/vendor.min.css">
         <link rel="stylesheet" href="/styles/main.min.css">
         <!(endif)-->
 

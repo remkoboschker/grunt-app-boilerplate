@@ -51,12 +51,8 @@ module.exports = (grunt) ->
     # build minimized CSS files
     cssmin:
       release:
-        expand: true
-        cwd: "build/debug/"
-        src: ["styles/vendor.css", "styles/main.css"]
-        dest: "build/release/"
-        ext: ".min.css"
-
+        files:
+          "build/release/styles/main.min.css": ["build/debug/styles/vendor.css", "build/debug/styles/main.css"]
     
     # JSHint sources (not used since js files are compiled from coffee files)
     # jshint:
