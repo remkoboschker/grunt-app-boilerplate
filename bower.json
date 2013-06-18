@@ -7,7 +7,7 @@
     "normalize-css": "*",
     "requirejs": "*",
     "mocha": "*",
-    "chai": "*",
+    "chai": "~1.5.0",
     "almond": "*"
   }
 }
